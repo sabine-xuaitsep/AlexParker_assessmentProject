@@ -14,5 +14,5 @@ RewriteEngine on
 
 
 #-----------------------------------------------
-RewriteCond %{REQUEST_URI} !\.(js|css|jpg|gif|zip|png|pdf)$ [NC]
+RewriteCond %{REQUEST_URI} !\.(js|css|ico|png|jpg|gif|zip|pdf|svg|eot|ttf|woff|woff2)$ [NC]
 RewriteRule ^(.*)$ index.php [L]
