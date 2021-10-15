@@ -23,6 +23,8 @@
   ?>
 </title>
 
+<base href="<?php echo BASE_HREF; ?>">
+
 <!-- Favicon -->
 <link rel="shortcut icon" href="images/favicon/favicon.ico" />
 <link
