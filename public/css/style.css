@@ -312,7 +312,7 @@ button {
 }
 
 .menu-link li {
-    display: inline-block;
+    /* display: inline-block; */
     margin: 2px 4px;
 }
 
@@ -611,7 +611,7 @@ tr > td:nth-child(2) {
 /* Blog Post & Single Blog Page */
 
 div.blog-post {
-    display: none;
+    /* display: none; */
     margin-bottom: 50px;
 }
 
