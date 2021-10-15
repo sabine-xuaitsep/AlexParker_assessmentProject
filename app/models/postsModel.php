@@ -21,3 +21,22 @@ function findAll(\PDO $conn) :array {
   $rs = $conn->query($sql);
   return $rs->fetchAll(\PDO::FETCH_ASSOC);
 }
+
+
+/**
+ * findOne post by ID
+ *
+ * @param \PDO $conn
+ * @param integer $id
+ * @return array
+ */
+function findOne(\PDO $conn, int $id) :array {
+  $sql = 'SELECT p.*, c.name as catName
+          FROM posts p
+          JOIN categories c ON p.category_id = c.id
+          WHERE p.id = :id;';
+  $rs = $conn->prepare($sql);
+  $rs->bindValue(':id', $id, \PDO::PARAM_INT);
+  $rs->execute();
+  return $rs->fetch(\PDO::FETCH_ASSOC);
+}

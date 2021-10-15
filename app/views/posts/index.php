@@ -24,20 +24,24 @@ use Core\Functions;
     <?php foreach($posts as $post): ?>
       <div class="col-md-12 blog-post">
         <div class="post-title">
-          <a href="single.html">
+          <a href="?postId=<?php echo $post['id']; ?>">
             <h1>
               <?php echo $post['title']; ?>
             </h1>
           </a>
         </div>
         <div class="post-info">
-          <span><?php echo Functions\datify($post['created_at']); ?></span> | <span><?php echo $post['catName']; ?></span>
+          <span>
+            <?php echo Functions\datify($post['created_at']); ?>
+          </span> | <span>
+            <?php echo $post['catName']; ?>
+          </span>
         </div>
         <p>
           <?php echo Functions\truncate($post['text']); ?>
         </p>
         <a
-        href="single.html"
+        href="?postId=<?php echo $post['id']; ?>"
         class="
         button button-style button-anim
         fa fa-long-arrow-right
