@@ -31,7 +31,7 @@ use Core\Functions;
           </a>
         </div>
         <div class="post-info">
-          <span>2016-03-03</span> | <span><?php echo $post['catName']; ?></span>
+          <span><?php echo Functions\datify($post['created_at']); ?></span> | <span><?php echo $post['catName']; ?></span>
         </div>
         <p>
           <?php echo Functions\truncate($post['text']); ?>

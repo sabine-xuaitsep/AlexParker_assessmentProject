@@ -13,5 +13,13 @@ define('DB_PASSWORD', 'root');
 $content = '';
 $title = '';
 
-// Default length for text
-define('TRUNCATE_LENGTH', 150);
+
+// ------------- start VARIABLES related to core/functions -------------
+
+// Default length for text excerpt
+define('TRUNCATE_LENGTH', '150');
+
+// Default date format
+define('DATE_FORMAT', 'Y-m-d');
+
+// ------------- end VARIABLES related to core/functions -------------
