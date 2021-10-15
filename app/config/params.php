@@ -12,3 +12,6 @@ define('DB_PASSWORD', 'root');
 // Initialization of dynamic zones
 $content = '';
 $title = '';
+
+// Default length for text
+define('TRUNCATE_LENGTH', 150);

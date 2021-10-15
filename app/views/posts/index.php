@@ -5,6 +5,9 @@
   Available VARIABLES: 
     - $posts: ARRAY(ARRAY(id, title, text, created_at, quote, category_id, catName))
 */
+
+use Core\Functions;
+
 ?>
 
 <div class="row">
@@ -31,7 +34,7 @@
           <span>2016-03-03</span> | <span><?php echo $post['catName']; ?></span>
         </div>
         <p>
-          <?php echo $post['text']; ?>
+          <?php echo Functions\truncate($post['text']); ?>
         </p>
         <a
         href="single.html"
