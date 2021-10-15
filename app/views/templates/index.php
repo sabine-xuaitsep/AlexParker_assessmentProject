@@ -30,8 +30,8 @@
             <div class="col-md-12 page-body">
 
               <?php 
-              // Dynamic zone
-              echo $content = "coucou AlexParker"; 
+              // Dynamic content zone
+              echo $content; 
               ?>
 
             </div>
@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-
+    
     <!-- Back to Top Start -->
     <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a>
     <!-- Back to Top End -->

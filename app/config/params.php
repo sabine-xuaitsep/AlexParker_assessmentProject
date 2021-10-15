@@ -11,3 +11,4 @@ define('DB_PASSWORD', 'root');
 
 // Initialization of dynamic zones
 $content = '';
+$title = '';

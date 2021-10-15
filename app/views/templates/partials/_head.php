@@ -16,7 +16,12 @@
 <meta name="copyright" content="company name" />
 <meta name="robots" content="index,follow" />
 
-<title>DevBlog - Personal Blog Template</title>
+<title>
+  <?php 
+  // Dynamic title zone
+  echo $title; 
+  ?>
+</title>
 
 <!-- Favicon -->
 <link rel="shortcut icon" href="images/favicon/favicon.ico" />
@@ -38,6 +43,7 @@
   rel="stylesheet"
   href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700"
 />
+
 
 <!-- HTML5 shiv and Respond.js support IE8 or Older for HTML5 elements and media queries -->
 <!--[if lt IE 9]>
