@@ -14,8 +14,8 @@ RewriteEngine on
 
 # DETAIL OF A POST
 # PATTERN: posts/id/slug-of-post.html
-# URL: index.php?postId=x
-RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\.html$ index.php?postId=$1 [L]
+# URL: index.php?posts=x
+RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\.html$ index.php?posts=$1 [L]
 
 # ADDING A POST
 # PATTERN: posts/add/form.html
