@@ -39,10 +39,33 @@ function showAction(\PDO $conn, int $id) {
   include_once '../app/models/postsModel.php';
   $post = PostsModel\findOne($conn, $id);
 
-  // load $title & posts/show in $content
   GLOBAL $content, $title;
+  // load $title
   $title = "Alex Parker - " . $post['title'];
+  // load posts/show in $content
   ob_start();
     include '../app/views/posts/show.php';
   $content = ob_get_clean();
+
+  // load popupAction
+  popupAction($conn);
+}
+
+
+/**
+ * popupAction: suggest one post randomly
+ *
+ * @param \PDO $conn
+ * @return void
+ */
+function popupAction(\PDO $conn) {
+  // asking one post randomly to postsModel
+  include_once '../app/models/postsModel.php';
+  $post = PostsModel\suggestOne($conn);
+
+  // load posts/_popup in $popup
+  GLOBAL $popup;
+  ob_start();
+    include '../app/views/posts/_popup.php';
+  $popup = ob_get_clean();
 }

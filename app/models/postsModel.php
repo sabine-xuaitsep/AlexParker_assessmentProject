@@ -40,3 +40,19 @@ function findOne(\PDO $conn, int $id) :array {
   $rs->execute();
   return $rs->fetch(\PDO::FETCH_ASSOC);
 }
+
+
+/**
+ * suggestOne post randomly
+ *
+ * @param \PDO $conn
+ * @return array
+ */
+function suggestOne(\PDO $conn) :array {
+  $sql = 'SELECT *
+          FROM posts 
+          ORDER BY RAND () 
+          LIMIT 1;';
+  $rs = $conn->query($sql);
+  return $rs->fetch(\PDO::FETCH_ASSOC);
+}

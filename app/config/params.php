@@ -12,6 +12,7 @@ define('DB_PASSWORD', 'root');
 // Initialization of dynamic zones
 $content = '';
 $title = '';
+$popup = '';
 
 
 // ------------- start VARIABLES related to core/functions -------------
