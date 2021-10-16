@@ -27,7 +27,7 @@
     <!-- Post Headline End -->
 
     <!-- Form Start -->
-    <form action="posts/add/insert.html">
+    <form action="posts/add/insert.html" method="post">
       <div class="form-group">
         <label for="title">Title</label>
         <input
@@ -36,6 +36,7 @@
           id="title"
           class="form-control"
           placeholder="Enter your title here"
+          required="required"
         />
       </div>
       <div class="form-group">
@@ -53,7 +54,7 @@
         <input type="file" class="form-control-file btn btn-primary" id="exampleFormControlFile1">
       </div>
       <div class="form-group">
-        <label for="text">Quote</label>
+        <label for="quote">Quote</label>
         <textarea
           id="quote"
           name="quote"
@@ -63,7 +64,7 @@
         ></textarea>
       </div>
       <div class="form-group">
-        <label for="text">Category</label>
+        <label for="category">Category</label>
         <select
           id="category"
           name="category_id"

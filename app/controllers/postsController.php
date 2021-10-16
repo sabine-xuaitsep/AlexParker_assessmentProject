@@ -106,3 +106,24 @@ function editAction(\PDO $conn, int $id = 0) {
   // load shAction (syntaxHiglighter stylesheets & scripts)
   \App\Config\Functions\shAction();
 }
+
+
+/**
+ * storeAction
+ *
+ * @param \PDO $conn
+ * @param array $data
+ * @return void
+ */
+function storeAction(\PDO $conn, array $data) {
+  // adding $data to postsTable
+  $result = PostsModel\insertOne($conn, $data);
+
+  // check error
+  if ($result === false):
+    editAction($conn);
+  else:
+    // redirection to homepage
+    header('Location:' . BASE_HREF);
+  endif;
+}

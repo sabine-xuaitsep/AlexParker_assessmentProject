@@ -59,3 +59,26 @@ function suggestOne(\PDO $conn) :array {
   $rs = $conn->query($sql);
   return $rs->fetch(\PDO::FETCH_ASSOC);
 }
+
+
+/**
+ * insertOne post
+ *
+ * @param \PDO $conn
+ * @param array $data
+ * @return integer
+ */
+function insertOne(\PDO $conn, array $data) :bool {
+  $sql = 'INSERT INTO posts
+          SET title       = :title,
+              text        = :text,
+              quote       = :quote,
+              category_id = :catID,
+              created_at  = NOW();';
+  $rs = $conn->prepare($sql);
+  $rs->bindValue(':title', $data['title'], \PDO::PARAM_STR);
+  $rs->bindValue(':text', $data['text'], \PDO::PARAM_STR);
+  $rs->bindValue(':quote', $data['quote'], \PDO::PARAM_STR);
+  $rs->bindValue(':catID', $data['category_id'], \PDO::PARAM_INT);
+  return $rs->execute();
+}
