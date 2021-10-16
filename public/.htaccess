@@ -19,8 +19,8 @@ RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\.html$ index.php?posts=$1
 
 # ADDING A POST
 # PATTERN: posts/add/form.html
-# URL: index.php?posts=create 
-RewriteRule ^posts\/add\/form.html$ index.php?posts=create [L]
+# URL: index.php?posts=edit 
+RewriteRule ^posts\/add\/form.html$ index.php?posts=edit [L]
 
 #-----------------------------------------------
 RewriteCond %{REQUEST_URI} !\.(js|css|ico|png|jpg|gif|zip|pdf|svg|eot|ttf|woff|woff2)$ [NC]

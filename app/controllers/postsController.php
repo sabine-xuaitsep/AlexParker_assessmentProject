@@ -5,7 +5,7 @@
 
 namespace App\Controllers\PostsController;
 use App\Models\PostsModel;
-
+include_once '../app/models/postsModel.php';
 
 /**
  * indexAction: posts list
@@ -15,7 +15,6 @@ use App\Models\PostsModel;
  */
 function indexAction(\PDO $conn) {
   // asking all posts to postsModel
-  include_once '../app/models/postsModel.php';
   $posts = PostsModel\findAll($conn);
 
   // load $title & posts/index in $content
@@ -36,22 +35,29 @@ function indexAction(\PDO $conn) {
  */
 function showAction(\PDO $conn, int $id) {
   // asking one post to postsModel
-  include_once '../app/models/postsModel.php';
   $post = PostsModel\findOne($conn, $id);
 
-  GLOBAL $content, $title;
-  // load $title
-  $title = "Alex Parker - " . $post['title'];
-  // load posts/show in $content
-  ob_start();
-    include '../app/views/posts/show.php';
-  $content = ob_get_clean();
+  //  if $id doesn't exist in DB
+  if($post === []):
+    // redirection to homepage
+    header('Location:' . BASE_HREF);
 
-  // load popupAction
-  popupAction($conn);
+  else:
+    GLOBAL $content, $title;
+    // load $title
+    $title = "Alex Parker - " . $post['title'];
+    // load posts/show in $content
+    ob_start();
+      include '../app/views/posts/show.php';
+    $content = ob_get_clean();
+  
+    // load popupAction
+    popupAction($conn);
+  
+    // load shAction (syntaxHiglighter stylesheets & scripts)
+    \App\Config\Functions\shAction();
 
-  // load shAction (syntaxHiglighter stylesheets & scripts)
-  \App\Config\Functions\shAction();
+  endif;
 }
 
 
@@ -63,7 +69,6 @@ function showAction(\PDO $conn, int $id) {
  */
 function popupAction(\PDO $conn) {
   // asking one post randomly to postsModel
-  include_once '../app/models/postsModel.php';
   $post = PostsModel\suggestOne($conn);
 
   // load posts/_popup in $popup
@@ -75,18 +80,24 @@ function popupAction(\PDO $conn) {
 
 
 /**
- * createAction
+ * editAction
  *
  * @param \PDO $conn
+ * @param integer $id
  * @return void
  */
-function createAction(\PDO $conn) {
+function editAction(\PDO $conn, int $id = 0) {
+  // asking one post to postsModel 
+  //  $_GET['id'] exist ? return [data] : return [] 
+  $post = PostsModel\findOne($conn, $id);
+
   GLOBAL $content, $title;
   // load $title
-  $title = "Alex Parker - Add a post";
+  $title = ($post === []) ? "Alex Parker - Add a post" : "Alex Parker - Edit a post";
+  
   // load create form
   ob_start();
-    include '../app/views/posts/create.php';
+    include '../app/views/posts/postForm.php';
   $content = ob_get_clean();
 
   // load popupAction

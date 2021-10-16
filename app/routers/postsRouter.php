@@ -8,22 +8,22 @@ include_once '../app/controllers/postsController.php';
 
 switch ($_GET['posts']):
 
-  case 'create':
+  case 'edit':
     // ADDING A POST ROUTE
-    // PATTERN: /posts/add/form.html => ?posts=create
+    // PATTERN: /posts/add/form.html => ?posts=edit
     // CTRL: PostsController
-    // ACTION: create
+    // ACTION: edit
     // TITLE: Alex Parker - Add a post
-    PostsController\createAction($conn);
+    PostsController\editAction($conn);
     break;
   
   default:
     // DETAIL OF A POST ROUTE
-    // PATTERN: /posts/id/slug-of-post.html => ?postId=x
+    // PATTERN: /posts/id/slug-of-post.html => ?posts=x
     // CTRL: PostsController
     // ACTION: show
     // TITLE: Alex Parker - Title of post
-    PostsController\showAction($conn, $_GET['posts']);
+    PostsController\showAction($conn, intval($_GET['posts']));
     break;
 
 endswitch;

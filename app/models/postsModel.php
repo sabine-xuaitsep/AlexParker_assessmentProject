@@ -25,6 +25,7 @@ function findAll(\PDO $conn) :array {
 
 /**
  * findOne post by ID
+ *  if $id doesn't exist, return [];
  *
  * @param \PDO $conn
  * @param integer $id
@@ -38,7 +39,9 @@ function findOne(\PDO $conn, int $id) :array {
   $rs = $conn->prepare($sql);
   $rs->bindValue(':id', $id, \PDO::PARAM_INT);
   $rs->execute();
-  return $rs->fetch(\PDO::FETCH_ASSOC);
+  $result = $rs->fetch(\PDO::FETCH_ASSOC);
+  $result = ($result === false) ? [] : $result;
+  return $result;
 }
 
 

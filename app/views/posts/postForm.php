@@ -1,6 +1,10 @@
 <?php
 /*
-  ./app/views/posts/create.php
+  ./app/views/posts/postForm.php
+
+  if available:
+    VARIABLES: 
+    - $post: ARRAY(id, title, text, created_at, quote, category_id, catName)
 */
 ?>
 
