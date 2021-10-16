@@ -54,7 +54,7 @@ use Core\Functions;
 
       <!-- Post Buttons -->
       <div>
-        <a href="form.html" type="button" class="btn btn-primary"
+        <a href="posts/<?php echo $post['id']; ?>/<?php echo Functions\slugify($post['title']); ?>/edit/form.html" type="button" class="btn btn-primary"
           >Edit Post</a
         >
         <a

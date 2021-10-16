@@ -6,6 +6,11 @@
     VARIABLES: 
     - $post: ARRAY(id, title, text, created_at, quote, category_id, catName)
 */
+
+$postTitle = !($post === []) ? $post['title'] : '';
+$postText = !($post === []) ? $post['text'] : '';
+$postQuote = !($post === []) ? $post['quote'] : '';
+
 ?>
 
 <div class="row">
@@ -37,6 +42,7 @@
           class="form-control"
           placeholder="Enter your title here"
           required="required"
+          value="<?php echo $postTitle; ?>"
         />
       </div>
       <div class="form-group">
@@ -47,7 +53,7 @@
           class="form-control"
           rows="5"
           placeholder="Enter your text here"
-        ></textarea>
+        ><?php echo $postText; ?></textarea>
       </div>
       <div class="form-group">
         <label for="exampleFormControlFile1"> Image</label>
@@ -61,7 +67,7 @@
           class="form-control"
           rows="5"
           placeholder="Enter your quote here"
-        ></textarea>
+        ><?php echo $postQuote; ?></textarea>
       </div>
       <div class="form-group">
         <label for="category">Category</label>
@@ -70,10 +76,42 @@
           name="category_id"
           class="form-control"
         >
-          <option disabled selected>
-            Select your category
-          </option>
-          <?php 
+        <?php 
+          if (!($post === [])): ?>
+            <option disabled>
+              Select your category
+            </option>
+            <?php 
+
+            // asking all categories to categoriesModel
+            include_once '../app/models/categoriesModel.php';
+            $categories = App\Models\CategoriesModel\findAll($conn);
+            
+            foreach($categories as $cat): 
+
+              if($post['category_id'] === $cat['id']): ?>
+
+                <option value="<?php echo $cat['id']; ?>" selected>
+                  <?php echo $cat['name']; ?>
+                </option>
+                
+                <?php
+              else: ?>
+                <option value="<?php echo $cat['id']; ?>">
+                  <?php echo $cat['name']; ?>
+                </option>
+                
+                <?php
+              endif; 
+            
+            endforeach;
+
+          else: ?>
+            <option disabled selected>
+              Select your category
+            </option>
+
+            <?php 
 
             // asking all categories to categoriesModel
             include_once '../app/models/categoriesModel.php';
@@ -81,9 +119,13 @@
           
             foreach($categories as $cat): ?>
 
-              <option value="<?php echo $cat['id']; ?>"><?php echo $cat['name']; ?></option>
+              <option value="<?php echo $cat['id']; ?>">
+                <?php echo $cat['name']; ?>
+              </option>
 
-          <?php endforeach; ?>
+            <?php endforeach; 
+          endif; 
+        ?>
         </select>
       </div>
       <div>
