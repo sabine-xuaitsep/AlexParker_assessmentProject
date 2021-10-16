@@ -47,6 +47,11 @@
 />
 
 
+<!-- !!! syntaxHighlighter stylesheet ON FORM & SINGLE PAGES ONLY start !!! -->
+<?php echo $stylesheet; ?>
+<!-- !!! syntaxHighlighter stylesheet ON FORM & SINGLE PAGES ONLY end !!! -->
+
+
 <!-- HTML5 shiv and Respond.js support IE8 or Older for HTML5 elements and media queries -->
 <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>

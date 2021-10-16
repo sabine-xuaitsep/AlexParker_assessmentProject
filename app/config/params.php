@@ -13,6 +13,9 @@ define('DB_PASSWORD', 'root');
 $content = '';
 $title = '';
 $popup = '';
+$stylesheet = '';
+$script = '';
+
 
 
 // ------------- start VARIABLES related to core/functions -------------

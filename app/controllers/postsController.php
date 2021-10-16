@@ -49,6 +49,9 @@ function showAction(\PDO $conn, int $id) {
 
   // load popupAction
   popupAction($conn);
+
+  // load shAction (syntaxHiglighter stylesheets & scripts)
+  \App\Config\Functions\shAction();
 }
 
 

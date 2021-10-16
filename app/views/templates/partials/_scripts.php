@@ -10,3 +10,9 @@
 
 <!-- Main Javascript File  -->
 <script type="text/javascript" src="js/scripts.js"></script>
+
+
+<!-- !!! syntaxHighlighter scripts ON FORM & SINGLE PAGES ONLY start !!! -->
+<?php echo $script; ?>
+<!-- !!! syntaxHighlighter scripts ON FORM & SINGLE PAGES ONLY end !!! -->
+  
