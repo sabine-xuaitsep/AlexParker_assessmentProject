@@ -3,6 +3,8 @@
   ./app/router.php
 */
 
+use App\Controllers\PostsController;
+
 
 if(isset($_GET['postId'])):
   // DETAIL OF A POST ROUTE
@@ -11,9 +13,17 @@ if(isset($_GET['postId'])):
   // ACTION: show
   // TITLE: Alex Parker - Title of post
   include_once '../app/controllers/postsController.php';
-  App\Controllers\PostsController\showAction($conn, $_GET['postId']);
-  
-  
+  PostsController\showAction($conn, $_GET['postId']);
+
+elseif(isset($_GET['posts']) && $_GET['posts'] === 'create'):
+  // ADDING A POST ROUTE
+  // PATTERN: /posts/add/form.html => ?posts=create
+  // CTRL: PostsController
+  // ACTION: create
+  // TITLE: Alex Parker - Add a post
+  include_once '../app/controllers/postsController.php';
+  PostsController\createAction($conn);
+
 else:
   // DEFAULT ROUTE
   // PATTERN: /
@@ -21,7 +31,7 @@ else:
   // ACTION: index
   // TITLE: Alex Parker - Blog
   include_once '../app/controllers/postsController.php';
-  App\Controllers\PostsController\indexAction($conn);
+  PostsController\indexAction($conn);
   
     
 endif;

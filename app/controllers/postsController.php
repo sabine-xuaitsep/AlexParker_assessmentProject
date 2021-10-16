@@ -72,3 +72,26 @@ function popupAction(\PDO $conn) {
     include '../app/views/posts/_popup.php';
   $popup = ob_get_clean();
 }
+
+
+/**
+ * createAction
+ *
+ * @param \PDO $conn
+ * @return void
+ */
+function createAction(\PDO $conn) {
+  GLOBAL $content, $title;
+  // load $title
+  $title = "Alex Parker - Add a post";
+  // load create form
+  ob_start();
+    include '../app/views/posts/create.php';
+  $content = ob_get_clean();
+
+  // load popupAction
+  popupAction($conn);
+
+  // load shAction (syntaxHiglighter stylesheets & scripts)
+  \App\Config\Functions\shAction();
+}
