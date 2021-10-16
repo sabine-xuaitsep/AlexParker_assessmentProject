@@ -12,6 +12,10 @@ RewriteEngine on
 # Règles de réécriture d'URL : 
 #-----------------------------------------------
 
+# DETAIL OF A POST
+# PATTERN: posts/id/slug-of-post.html
+# URL: index.php?postId=x
+RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\.html$ index.php?postId=$1 [L]
 
 #-----------------------------------------------
 RewriteCond %{REQUEST_URI} !\.(js|css|ico|png|jpg|gif|zip|pdf|svg|eot|ttf|woff|woff2)$ [NC]

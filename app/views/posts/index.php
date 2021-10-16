@@ -24,7 +24,7 @@ use Core\Functions;
     <?php foreach($posts as $post): ?>
       <div class="col-md-12 blog-post">
         <div class="post-title">
-          <a href="?postId=<?php echo $post['id']; ?>">
+          <a href="posts/<?php echo $post['id']; ?>/<?php echo Functions\slugify($post['title']); ?>.html">
             <h1>
               <?php echo $post['title']; ?>
             </h1>
@@ -41,7 +41,7 @@ use Core\Functions;
           <?php echo Functions\truncate($post['text']); ?>
         </p>
         <a
-        href="?postId=<?php echo $post['id']; ?>"
+        href="posts/<?php echo $post['id']; ?>/<?php echo Functions\slugify($post['title']); ?>.html"
         class="
         button button-style button-anim
         fa fa-long-arrow-right
