@@ -13,7 +13,7 @@ switch ($_GET['posts']):
 
     if(isset($_GET['id'])):
       // EDIT A POST ROUTE
-      // PATTERN: /posts/id/slug-du-post/edit/form.html => ?posts=edit&id=x
+      // PATTERN: /posts/id/slug-of-post/edit/form.html => ?posts=edit&id=x
       // CTRL: PostsController
       // ACTION: edit
       // TITLE: Alex Parker - Edit a post
@@ -43,7 +43,7 @@ switch ($_GET['posts']):
 
   case 'update':
     // UPDATE A POST ROUTE
-    // PATTERN: /posts/id/slug-du-post/edit/update.html => ?posts=update&id=x
+    // PATTERN: /posts/id/slug-of-post/edit/update.html => ?posts=update&id=x
     // CTRL: PostsController
     // ACTION: update
     // REDIRECTION to detail of post

@@ -23,7 +23,7 @@ RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\.html$ index.php?posts=$1
 RewriteRule ^posts\/add\/form\.html$ index.php?posts=edit [L]
 
 # EDIT A POST
-# PATTERN: posts/id/slug-du-post/edit/form.html
+# PATTERN: posts/id/slug-of-post/edit/form.html
 # URL: index.php?posts=edit&id=x
 RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\/edit\/form\.html$ index.php?posts=edit&id=$1 [L]
 
@@ -33,7 +33,7 @@ RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\/edit\/form\.html$ index.
 RewriteRule ^posts\/add\/insert\.html$ index.php?posts=store [L]
 
 # UPDATE A POST
-# PATTERN: posts/id/slug-du-post/edit/update.html
+# PATTERN: posts/id/slug-of-post/edit/update.html
 # URL: index.php?posts=update&id=x
 RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\/edit\/update\.html$ index.php?posts=update&id=$1 [L]
 
