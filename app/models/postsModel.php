@@ -82,3 +82,28 @@ function insertOne(\PDO $conn, array $data) :bool {
   $rs->bindValue(':catID', $data['category_id'], \PDO::PARAM_INT);
   return $rs->execute();
 }
+
+
+/**
+ * updateOne post
+ *
+ * @param \PDO $conn
+ * @param integer $id
+ * @param array $data
+ * @return boolean
+ */
+function updateOne(\PDO $conn, int $id, array $data) :bool {
+  $sql = 'UPDATE posts
+          SET title       = :title,
+              text        = :text,
+              quote       = :quote,
+              category_id = :catID
+          WHERE id        = :id;';
+  $rs = $conn->prepare($sql);
+  $rs->bindValue(':id', $id, \PDO::PARAM_INT);
+  $rs->bindValue(':title', $data['title'], \PDO::PARAM_STR);
+  $rs->bindValue(':text', $data['text'], \PDO::PARAM_STR);
+  $rs->bindValue(':quote', $data['quote'], \PDO::PARAM_STR);
+  $rs->bindValue(':catID', $data['category_id'], \PDO::PARAM_INT);
+  return $rs->execute();
+}

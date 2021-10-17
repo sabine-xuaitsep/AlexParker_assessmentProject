@@ -127,3 +127,28 @@ function storeAction(\PDO $conn, array $data) {
     header('Location:' . BASE_HREF);
   endif;
 }
+
+
+/**
+ * updateAction
+ *
+ * @param \PDO $conn
+ * @param integer $id
+ * @param array $data
+ * @return void
+ */
+function updateAction(\PDO $conn, int $id, array $data) {
+  // updating $data by $id in postsTable
+  $result = PostsModel\updateOne($conn, $id, $data);
+
+  // check error
+  if ($result === false):
+    // ???
+  else:
+    // redirection to detail of post
+    // TODO: dynamically improve header location 
+    header('Location:' . BASE_HREF . 'posts/' . $id . '/' . \Core\Functions\slugify($data['title']) . '.html');
+    // header('Location:' . BASE_HREF . 'index.php?posts=' . $id);
+    // showAction($conn, $id);
+  endif;
+}

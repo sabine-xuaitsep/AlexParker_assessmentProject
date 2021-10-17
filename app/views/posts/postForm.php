@@ -32,7 +32,18 @@ $postQuote = !($post === []) ? $post['quote'] : '';
     <!-- Post Headline End -->
 
     <!-- Form Start -->
-    <form action="posts/add/insert.html" method="post">
+    <?php 
+      if($post === []): ?>
+        <form action="posts/add/insert.html" method="post">
+
+        <?php
+      else: ?>
+        <form action="posts/<?php echo $post['id']; ?>/<?php echo Core\Functions\slugify($post['title']); ?>/edit/update.html" method="post">
+
+        <?php
+      endif;
+    ?>
+
       <div class="form-group">
         <label for="title">Title</label>
         <input

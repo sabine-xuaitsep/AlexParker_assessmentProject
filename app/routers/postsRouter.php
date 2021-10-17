@@ -37,10 +37,18 @@ switch ($_GET['posts']):
     // PATTERN: /posts/add/insert.html => ?posts=store
     // CTRL: PostsController
     // ACTION: store
-    // REDIRECTION VERS LA PAGE D'ACCUEIL
+    // REDIRECTION to homepage
     PostsController\storeAction($conn, $_POST);
     break;
 
+  case 'update':
+    // UPDATE A POST ROUTE
+    // PATTERN: /posts/id/slug-du-post/edit/update.html => ?posts=update&id=x
+    // CTRL: PostsController
+    // ACTION: update
+    // REDIRECTION to detail of post
+    PostsController\updateAction($conn, intval($_GET['id']), $_POST);
+    break;
 
   default:
     // DETAIL OF A POST ROUTE

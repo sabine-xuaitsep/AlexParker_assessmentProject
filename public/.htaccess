@@ -32,6 +32,11 @@ RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\/edit\/form\.html$ index.
 # URL: index.php?posts=store
 RewriteRule ^posts\/add\/insert\.html$ index.php?posts=store [L]
 
+# UPDATE A POST
+# PATTERN: posts/id/slug-du-post/edit/update.html
+# URL: index.php?posts=update&id=x
+RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\/edit\/update\.html$ index.php?posts=update&id=$1 [L]
+
 #-----------------------------------------------
 RewriteCond %{REQUEST_URI} !\.(js|css|ico|png|jpg|gif|zip|pdf|svg|eot|ttf|woff|woff2)$ [NC]
 RewriteRule ^(.*)$ index.php [L]
