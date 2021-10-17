@@ -95,7 +95,7 @@ function editAction(\PDO $conn, int $id = 0) {
   // load $title
   $title = ($post === []) ? "Alex Parker - Add a post" : "Alex Parker - Edit a post";
   
-  // load create form
+  // load postForm
   ob_start();
     include '../app/views/posts/postForm.php';
   $content = ob_get_clean();
@@ -121,6 +121,8 @@ function storeAction(\PDO $conn, array $data, string $fileName) {
 
   // check error
   if ($result === false):
+    // TODO: load error message
+    
     editAction($conn);
   else:
     // redirection to homepage
@@ -143,7 +145,9 @@ function updateAction(\PDO $conn, int $id, array $data, string $fileName) {
 
   // check error
   if ($result === false):
-    // ???
+    // TODO: load error message
+
+    editAction($conn, $id);
   else:
     // redirection to detail of post
     // TODO: dynamically improve header location 
@@ -167,7 +171,11 @@ function deleteAction(\PDO $conn, int $id) {
 
   // check error
   if ($result === false):
-    // ???
+    // TODO: load error message
+
+    // redirection to detail of post
+    // TODO: dynamically improve header location 
+    header('Location:' . BASE_HREF . 'posts/' . $id . '/' . \Core\Functions\slugify($data['title']) . '.html');
   else:
     // redirection to homepage
     header('Location:' . BASE_HREF);

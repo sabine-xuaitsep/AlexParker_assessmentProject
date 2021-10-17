@@ -7,6 +7,10 @@
     - $post: ARRAY(id, title, text, created_at, quote, image, category_id, catName)
 */
 
+// TODO: 
+//  value attribute doesn't display dynamical content with "double quote"
+//  prevent selection of wrong file [or display error message at submission?]
+
 $postTitle = !($post === []) ? $post['title'] : '';
 $postText = !($post === []) ? $post['text'] : '';
 $postQuote = !($post === []) ? $post['quote'] : '';

@@ -39,6 +39,8 @@ switch ($_GET['posts']):
     // ACTION: store
     // REDIRECTION to homepage
     Core\Functions\storeFile($_FILES, $_POST);
+    // TODO: error message & block process if file is not stored
+    
     PostsController\storeAction($conn, $_POST, $_FILES["image"]["name"]);
     break;
 
@@ -49,6 +51,8 @@ switch ($_GET['posts']):
     // ACTION: update
     // REDIRECTION to detail of post
     Core\Functions\storeFile($_FILES, $_POST);
+    // TODO: error message & block process if file is not stored
+
     PostsController\updateAction($conn, intval($_GET['id']), $_POST, $_FILES["image"]["name"]);
     break;
 

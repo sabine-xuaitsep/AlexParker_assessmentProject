@@ -44,4 +44,7 @@ RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\/delete\.html$ index.php?
 
 #-----------------------------------------------
 RewriteCond %{REQUEST_URI} !\.(js|css|ico|png|jpg|jpeg|gif|zip|pdf|svg|eot|ttf|woff|woff2)$ [NC]
+# fix TODO: not working properly with some special char
+#   %       send "Bad Request"
+#   |:*<>   send "Forbidden"
 RewriteRule ^(.*)$ index.php [L]

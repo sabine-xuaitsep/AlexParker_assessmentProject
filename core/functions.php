@@ -76,6 +76,8 @@ function slugify(string $chain, string $separator = '-') :string {
  * @return void
  */
 function storeFile(array $files, array $post) {
+
+  // TODO: improve all error messages
   
   $img_dir = "D:/web_dev/Dropbox/htdocs/scripts_serveurs/AlexParker_assessmentProject/public/images/blog/";
   $target_file = $img_dir . basename($files["image"]["name"]);    
