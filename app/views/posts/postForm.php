@@ -88,16 +88,19 @@ $postQuote = !($post === []) ? $post['quote'] : '';
           class="form-control"
         >
         <?php 
+          // asking all categories to categoriesModel
+          include_once '../app/models/categoriesModel.php';
+          $categories = App\Models\CategoriesModel\findAll($conn);
+
+          // Available VARIABLES: 
+          // - $categories: ARRAY(ARRAY(id, name, created_at, postsCount))
+
           if (!($post === [])): ?>
             <option disabled>
               Select your category
             </option>
-            <?php 
 
-            // asking all categories to categoriesModel
-            include_once '../app/models/categoriesModel.php';
-            $categories = App\Models\CategoriesModel\findAll($conn);
-            
+            <?php             
             foreach($categories as $cat): 
 
               if($post['category_id'] === $cat['id']): ?>
@@ -122,12 +125,7 @@ $postQuote = !($post === []) ? $post['quote'] : '';
               Select your category
             </option>
 
-            <?php 
-
-            // asking all categories to categoriesModel
-            include_once '../app/models/categoriesModel.php';
-            $categories = App\Models\CategoriesModel\findAll($conn);
-          
+            <?php          
             foreach($categories as $cat): ?>
 
               <option value="<?php echo $cat['id']; ?>">
