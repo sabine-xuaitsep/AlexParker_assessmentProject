@@ -107,3 +107,19 @@ function updateOne(\PDO $conn, int $id, array $data) :bool {
   $rs->bindValue(':catID', $data['category_id'], \PDO::PARAM_INT);
   return $rs->execute();
 }
+
+
+/**
+ * deleteOne post
+ *
+ * @param \PDO $conn
+ * @param integer $id
+ * @return boolean
+ */
+function deleteOne(\PDO $conn, int $id) :bool {
+  $sql = 'DELETE FROM posts
+          WHERE id = :id;';
+  $rs = $conn->prepare($sql);
+  $rs->bindValue(':id', $id, \PDO::PARAM_INT);
+  return $rs->execute();
+}

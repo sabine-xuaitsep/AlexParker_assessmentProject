@@ -58,7 +58,7 @@ use Core\Functions;
           >Edit Post</a
         >
         <a
-          href="#"
+          href="posts/<?php echo $post['id']; ?>/<?php echo Functions\slugify($post['title']); ?>/delete.html"
           type="button"
           class="btn btn-secondary"
           role="button"

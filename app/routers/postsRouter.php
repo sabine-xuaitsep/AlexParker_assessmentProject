@@ -50,6 +50,15 @@ switch ($_GET['posts']):
     PostsController\updateAction($conn, intval($_GET['id']), $_POST);
     break;
 
+  case 'delete':
+    // DELETE A POST ROUTE
+    // PATTERN: /posts/id/slug-of-post/delete.html => ?posts=delete&id=x
+    // CTRL: PostsController
+    // ACTION: delete
+    // REDIRECTION to homepage
+    PostsController\deleteAction($conn, intval($_GET['id']));
+    break;
+
   default:
     // DETAIL OF A POST ROUTE
     // PATTERN: /posts/id/slug-of-post.html => ?posts=x

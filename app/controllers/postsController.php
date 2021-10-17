@@ -152,3 +152,24 @@ function updateAction(\PDO $conn, int $id, array $data) {
     // showAction($conn, $id);
   endif;
 }
+
+
+/**
+ * deleteAction
+ *
+ * @param \PDO $conn
+ * @param integer $id
+ * @return void
+ */
+function deleteAction(\PDO $conn, int $id) {
+  // updating $data by $id in postsTable
+  $result = PostsModel\deleteOne($conn, $id);
+
+  // check error
+  if ($result === false):
+    // ???
+  else:
+    // redirection to homepage
+    header('Location:' . BASE_HREF);
+  endif;
+}
