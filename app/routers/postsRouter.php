@@ -38,7 +38,8 @@ switch ($_GET['posts']):
     // CTRL: PostsController
     // ACTION: store
     // REDIRECTION to homepage
-    PostsController\storeAction($conn, $_POST);
+    Core\Functions\storeFile($_FILES, $_POST);
+    PostsController\storeAction($conn, $_POST, $_FILES["image"]["name"]);
     break;
 
   case 'update':
@@ -47,7 +48,8 @@ switch ($_GET['posts']):
     // CTRL: PostsController
     // ACTION: update
     // REDIRECTION to detail of post
-    PostsController\updateAction($conn, intval($_GET['id']), $_POST);
+    Core\Functions\storeFile($_FILES, $_POST);
+    PostsController\updateAction($conn, intval($_GET['id']), $_POST, $_FILES["image"]["name"]);
     break;
 
   case 'delete':

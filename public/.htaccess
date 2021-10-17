@@ -43,5 +43,5 @@ RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\/edit\/update\.html$ inde
 RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\/delete\.html$ index.php?posts=delete&id=$1 [L]
 
 #-----------------------------------------------
-RewriteCond %{REQUEST_URI} !\.(js|css|ico|png|jpg|gif|zip|pdf|svg|eot|ttf|woff|woff2)$ [NC]
+RewriteCond %{REQUEST_URI} !\.(js|css|ico|png|jpg|jpeg|gif|zip|pdf|svg|eot|ttf|woff|woff2)$ [NC]
 RewriteRule ^(.*)$ index.php [L]

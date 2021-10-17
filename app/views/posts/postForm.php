@@ -4,7 +4,7 @@
 
   if available:
     VARIABLES: 
-    - $post: ARRAY(id, title, text, created_at, quote, category_id, catName)
+    - $post: ARRAY(id, title, text, created_at, quote, image, category_id, catName)
 */
 
 $postTitle = !($post === []) ? $post['title'] : '';
@@ -34,11 +34,19 @@ $postQuote = !($post === []) ? $post['quote'] : '';
     <!-- Form Start -->
     <?php 
       if($post === []): ?>
-        <form action="posts/add/insert.html" method="post">
+        <form 
+          action="posts/add/insert.html" 
+          method="post" 
+          enctype="multipart/form-data"
+        >
 
         <?php
       else: ?>
-        <form action="posts/<?php echo $post['id']; ?>/<?php echo Core\Functions\slugify($post['title']); ?>/edit/update.html" method="post">
+        <form 
+          action="posts/<?php echo $post['id']; ?>/<?php echo Core\Functions\slugify($post['title']); ?>/edit/update.html" 
+          method="post" 
+          enctype="multipart/form-data"
+        >
 
         <?php
       endif;
@@ -67,8 +75,15 @@ $postQuote = !($post === []) ? $post['quote'] : '';
         ><?php echo $postText; ?></textarea>
       </div>
       <div class="form-group">
-        <label for="exampleFormControlFile1"> Image</label>
-        <input type="file" class="form-control-file btn btn-primary" id="exampleFormControlFile1">
+        <label for="image">Image</label>
+        <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
+        <input 
+          type="file" 
+          class="form-control-file btn btn-primary" 
+          id="image" 
+          name="image" 
+          accept="image/png, image/jpeg, image/gif"
+        />
       </div>
       <div class="form-group">
         <label for="quote">Quote</label>

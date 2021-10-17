@@ -66,3 +66,62 @@ function slugify(string $chain, string $separator = '-') :string {
   $chain = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', $separator, $chain)));
   return trim($chain, '-');
 }
+
+
+/**
+ * storeFile
+ *
+ * @param array $files
+ * @param array $post
+ * @return void
+ */
+function storeFile(array $files, array $post) {
+  
+  $img_dir = "D:/web_dev/Dropbox/htdocs/scripts_serveurs/AlexParker_assessmentProject/public/images/blog/";
+  $target_file = $img_dir . basename($files["image"]["name"]);    
+  $uploadOk = 1;
+  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+  
+  // Check if image file is a actual image or fake image
+  if(isset($post["submit"])) {
+    $check = getimagesize($files["image"]["tmp_name"]);
+    if($check !== false) {
+      echo "File is an image - " . $check["mime"] . ".";
+      $uploadOk = 1;
+    } else {
+      echo "File is not an image.";
+      $uploadOk = 0;
+    }
+  }
+  
+  // Check if file already exists
+  if (file_exists($target_file)) {
+    echo "Sorry, file already exists.";
+    $uploadOk = 0;
+  }
+  
+  // Check file size
+  if ($files["image"]["size"] > 3000000) {
+    echo "Sorry, your file is too large.";
+    $uploadOk = 0;
+  }
+  
+  // Allow certain file formats
+  if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+  && $imageFileType != "gif" ) {
+    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+    $uploadOk = 0;
+  }
+
+  // Check if $uploadOk is set to 0 by an error
+  if ($uploadOk == 0) {
+    echo "Sorry, your file was not uploaded.";
+  // if everything is ok, try to upload file
+  } else {
+    if (move_uploaded_file($files["image"]["tmp_name"], $target_file)) {
+      echo "The file ". htmlspecialchars(basename($files["image"]["name"])). " has been uploaded.";
+    } else {
+      echo "Sorry, there was an error uploading your file.";
+    }
+  }
+}

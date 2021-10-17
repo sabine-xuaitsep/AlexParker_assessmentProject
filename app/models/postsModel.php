@@ -68,17 +68,19 @@ function suggestOne(\PDO $conn) :array {
  * @param array $data
  * @return integer
  */
-function insertOne(\PDO $conn, array $data) :bool {
+function insertOne(\PDO $conn, array $data, string $fileName) :bool {
   $sql = 'INSERT INTO posts
           SET title       = :title,
               text        = :text,
               quote       = :quote,
+              image       = :image,
               category_id = :catID,
               created_at  = NOW();';
   $rs = $conn->prepare($sql);
   $rs->bindValue(':title', $data['title'], \PDO::PARAM_STR);
   $rs->bindValue(':text', $data['text'], \PDO::PARAM_STR);
   $rs->bindValue(':quote', $data['quote'], \PDO::PARAM_STR);
+  $rs->bindValue(':image', $fileName, \PDO::PARAM_STR);
   $rs->bindValue(':catID', $data['category_id'], \PDO::PARAM_INT);
   return $rs->execute();
 }
@@ -92,11 +94,12 @@ function insertOne(\PDO $conn, array $data) :bool {
  * @param array $data
  * @return boolean
  */
-function updateOne(\PDO $conn, int $id, array $data) :bool {
+function updateOne(\PDO $conn, int $id, array $data, string $fileName) :bool {
   $sql = 'UPDATE posts
           SET title       = :title,
               text        = :text,
               quote       = :quote,
+              image       = :image,
               category_id = :catID
           WHERE id        = :id;';
   $rs = $conn->prepare($sql);
@@ -104,6 +107,7 @@ function updateOne(\PDO $conn, int $id, array $data) :bool {
   $rs->bindValue(':title', $data['title'], \PDO::PARAM_STR);
   $rs->bindValue(':text', $data['text'], \PDO::PARAM_STR);
   $rs->bindValue(':quote', $data['quote'], \PDO::PARAM_STR);
+  $rs->bindValue(':image', $fileName, \PDO::PARAM_STR);
   $rs->bindValue(':catID', $data['category_id'], \PDO::PARAM_INT);
   return $rs->execute();
 }

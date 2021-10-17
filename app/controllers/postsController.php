@@ -115,9 +115,9 @@ function editAction(\PDO $conn, int $id = 0) {
  * @param array $data
  * @return void
  */
-function storeAction(\PDO $conn, array $data) {
+function storeAction(\PDO $conn, array $data, string $fileName) {
   // adding $data to postsTable
-  $result = PostsModel\insertOne($conn, $data);
+  $result = PostsModel\insertOne($conn, $data, $fileName);
 
   // check error
   if ($result === false):
@@ -137,9 +137,9 @@ function storeAction(\PDO $conn, array $data) {
  * @param array $data
  * @return void
  */
-function updateAction(\PDO $conn, int $id, array $data) {
+function updateAction(\PDO $conn, int $id, array $data, string $fileName) {
   // updating $data by $id in postsTable
-  $result = PostsModel\updateOne($conn, $id, $data);
+  $result = PostsModel\updateOne($conn, $id, $data, $fileName);
 
   // check error
   if ($result === false):
