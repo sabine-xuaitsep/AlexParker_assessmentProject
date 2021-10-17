@@ -3,7 +3,7 @@
   ./app/views/templates/partials/_popup.php
 
   Available VARIABLES: 
-  - $post: ARRAY(id, title, text, created_at, quote, category_id)
+  - $post: ARRAY(id, title, text, created_at, quote, image, category_id)
 */
 ?>
 

@@ -3,7 +3,7 @@
   ./app/views/posts/index.php
 
   Available VARIABLES: 
-    - $post: ARRAY(id, title, text, created_at, quote, category_id, catName)
+    - $post: ARRAY(id, title, text, created_at, quote, image, category_id, catName)
 */
 
 use Core\Functions;
@@ -23,7 +23,7 @@ use Core\Functions;
   <div class="col-md-12 content-page">
     <div class="col-md-12 blog-post">
       <div>
-        <img src="images/blog/1.jpg" alt="">
+        <img src="images/blog/<?php echo $post['image']; ?>" alt="">
       </div>
 
       <!-- Post Headline Start -->

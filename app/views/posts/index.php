@@ -3,7 +3,7 @@
   ./app/views/posts/index.php
 
   Available VARIABLES: 
-    - $posts: ARRAY(ARRAY(id, title, text, created_at, quote, category_id, catName))
+    - $posts: ARRAY(ARRAY(id, title, text, created_at, quote, image, category_id, catName))
 */
 
 use Core\Functions;
