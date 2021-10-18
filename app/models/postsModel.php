@@ -12,13 +12,16 @@ namespace App\Models\PostsModel;
  * @param \PDO $conn
  * @return array
  */
-function findAll(\PDO $conn) :array {
+function findAll(\PDO $conn, int $offset) :array {
   $sql = 'SELECT p.*, c.name as catName
           FROM posts p
           JOIN categories c ON p.category_id = c.id
           ORDER BY p.created_at DESC
-          LIMIT 10;';
-  $rs = $conn->query($sql);
+          LIMIT 10
+          OFFSET :offset;';
+  $rs = $conn->prepare($sql);
+  $rs->bindValue(':offset', $offset, \PDO::PARAM_INT);
+  $rs->execute();
   return $rs->fetchAll(\PDO::FETCH_ASSOC);
 }
 
@@ -126,4 +129,18 @@ function deleteOne(\PDO $conn, int $id) :bool {
   $rs = $conn->prepare($sql);
   $rs->bindValue(':id', $id, \PDO::PARAM_INT);
   return $rs->execute();
+}
+
+
+/**
+ * countAll posts
+ *
+ * @param \PDO $conn
+ * @return void
+ */
+function countAll(\PDO $conn) :int {
+  $sql = 'SELECT id
+          FROM posts;';
+  $rs = $conn->query($sql);
+  return $rs->rowCount();;
 }

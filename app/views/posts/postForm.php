@@ -19,7 +19,7 @@ $postQuote = !($post === []) ? $post['quote'] : '';
 
 <div class="row">
 <div class="sub-title">
-  <a href="index.html" title="Go to Home Page"
+  <a href="" title="Go to Home Page"
     ><h2>Back Home</h2></a
   >
   <a href="#comment" class="smoth-scroll"

@@ -12,7 +12,7 @@ use Core\Functions;
 
 <div class="row">
   <div class="sub-title">
-    <a href="index.html" title="Go to Home Page"
+    <a href="" title="Go to Home Page"
       ><h2>Back Home</h2></a
     >
     <a href="#comment" class="smoth-scroll"
@@ -54,12 +54,11 @@ use Core\Functions;
 
       <!-- Post Buttons -->
       <div>
-        <a href="posts/<?php echo $post['id']; ?>/<?php echo Functions\slugify($post['title']); ?>/edit/form.html" type="button" class="btn btn-primary"
+        <a href="posts/<?php echo $post['id']; ?>/<?php echo Functions\slugify($post['title']); ?>/edit/form.html" class="btn btn-primary"
           >Edit Post</a
         >
         <a
           href="posts/<?php echo $post['id']; ?>/<?php echo Functions\slugify($post['title']); ?>/delete.html"
-          type="button"
           class="btn btn-secondary"
           role="button"
           >Delete Post</a

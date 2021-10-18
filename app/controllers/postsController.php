@@ -11,18 +11,35 @@ include_once '../app/models/postsModel.php';
  * indexAction: posts list
  *
  * @param \PDO $conn
+ * @param integer $pageNb
  * @return void
  */
-function indexAction(\PDO $conn) {
-  // asking all posts to postsModel
-  $posts = PostsModel\findAll($conn);
+function indexAction(\PDO $conn, int $pageNb) {
+  // count all posts
+  $postsCount = PostsModel\countAll($conn);
+  $nbOfPages = ceil($postsCount/10);
 
-  // load $title & posts/index in $content
-  GLOBAL $content, $title;
-  $title = "Alex Parker - Blog";
-  ob_start();
-    include '../app/views/posts/index.php';
-  $content = ob_get_clean();
+  //  if pageNb doesn't exist
+  //    lower numbers are already excluded by .htaccess
+  if($pageNb > $nbOfPages):
+    // redirection to homepage
+    header('Location:' . BASE_HREF);
+
+  else:
+    // calc $offset
+    $offset = ($pageNb-1)*10;
+
+    // asking all posts to postsModel
+    $posts = PostsModel\findAll($conn, $offset);
+
+    // load $title & posts/index in $content
+    GLOBAL $content, $title;
+    $title = "Alex Parker - Blog";
+    ob_start();
+      include '../app/views/posts/index.php';
+    $content = ob_get_clean();
+
+  endif;
 }
 
 

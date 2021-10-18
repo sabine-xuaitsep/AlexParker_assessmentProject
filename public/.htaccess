@@ -42,6 +42,11 @@ RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\/edit\/update\.html$ inde
 # URL: index.php?posts=delete&id=x
 RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\/delete\.html$ index.php?posts=delete&id=$1 [L]
 
+# POST PAGINATION ROUTE
+# PATTERN: /page/x.html
+# URL: index.php?posts=more&page=x
+RewriteRule ^page\/([1-9][0-9]*).html$ index.php?posts=more&page=$1 [L]
+
 #-----------------------------------------------
 RewriteCond %{REQUEST_URI} !\.(js|css|ico|png|jpg|jpeg|gif|zip|pdf|svg|eot|ttf|woff|woff2)$ [NC]
 # fix TODO: not working properly with some special char

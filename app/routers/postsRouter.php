@@ -1,6 +1,9 @@
 <?php
 /*
   ./app/routers/postsRouter.php
+
+  intval() prevent error: 
+    number > 9223372036854775807 === string
 */
 
 use App\Controllers\PostsController;
@@ -63,6 +66,15 @@ switch ($_GET['posts']):
     // ACTION: delete
     // REDIRECTION to homepage
     PostsController\deleteAction($conn, intval($_GET['id']));
+    break;
+  
+  case 'more':
+    // POST PAGINATION ROUTE
+    // PATTERN: /page/x.html => ?posts=more&page=x
+    // CTRL: PostsController
+    // ACTION: index
+    // TITLE: Alex Parker - Blog
+    PostsController\indexAction($conn, intval($_GET['page']));
     break;
 
   default:

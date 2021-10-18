@@ -13,7 +13,7 @@ $categories = App\Models\CategoriesModel\findAll($conn);
 
 <ul class="menu-link">
   <?php foreach($categories as $cat): ?>
-    <li><a href="index.html">
+    <li><a href="">
       <?php echo $cat['name'] . ' [' . $cat['postsCount'] . ']'; ?>
     </a></li>
   <?php endforeach; ?>

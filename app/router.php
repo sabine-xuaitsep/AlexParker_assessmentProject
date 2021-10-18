@@ -14,6 +14,6 @@ else:
   // ACTION: index
   // TITLE: Alex Parker - Blog
   include_once '../app/controllers/postsController.php';
-  App\Controllers\PostsController\indexAction($conn);
+  App\Controllers\PostsController\indexAction($conn, 1);
   
 endif;

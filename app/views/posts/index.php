@@ -4,6 +4,8 @@
 
   Available VARIABLES: 
     - $posts: ARRAY(ARRAY(id, title, text, created_at, quote, image, category_id, catName))
+    - $nbOfPages: INT
+    - $pageNb: INT
 */
 
 use Core\Functions;
@@ -14,7 +16,7 @@ use Core\Functions;
   <div class="col-md-12 content-page">
     <!-- ADD A POST -->
     <div>
-      <a href="posts/add/form.html" type="button" class="btn btn-primary">
+      <a href="posts/add/form.html" class="btn btn-primary">
         Add a Post
       </a>
     </div>
@@ -52,6 +54,38 @@ use Core\Functions;
       </div>
     <?php endforeach; ?>
     <!-- Blog Post End -->
+
+    <nav aria-label="Page navigation" style="text-align: center;">
+      <ul class="pagination">
+
+        <?php if($pageNb > 1): ?>
+          <li class="page-item"><a class="page-link" href="page/<?php echo $pageNb-1; ?>.html">Previous</a></li>
+        <?php endif; ?>
+
+        <?php 
+
+          for ($i = 1; $i <= $nbOfPages; $i++):
+
+            if($pageNb === $i):
+              ?>
+              <li class="page-item active"><a class="page-link" href="page/<?php echo $i; ?>.html"><?php echo $i; ?></a></li>
+              <?php
+            else:
+              ?>
+            <li class="page-item"><a class="page-link" href="page/<?php echo $i; ?>.html"><?php echo $i; ?></a></li>
+            <?php
+            endif;
+              ?>
+            <?php
+          endfor;
+        ?>
+
+        <?php if($pageNb < $nbOfPages): ?>
+          <li class="page-item"><a class="page-link" href="page/<?php echo $pageNb+1; ?>.html">Next</a></li>
+        <?php endif; ?>
+        
+      </ul>
+    </nav>
 
   </div>
 </div>
