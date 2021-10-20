@@ -15,7 +15,7 @@ namespace App\Models\PostsModel;
 function findAll(\PDO $conn, int $offset) :array {
   $sql = 'SELECT p.*, c.name as catName
           FROM posts p
-          JOIN categories c ON p.category_id = c.id
+          LEFT JOIN categories c ON p.category_id = c.id
           ORDER BY p.created_at DESC
           LIMIT 10
           OFFSET :offset;';
@@ -37,7 +37,7 @@ function findAll(\PDO $conn, int $offset) :array {
 function findOne(\PDO $conn, int $id) :array {
   $sql = 'SELECT p.*, c.name as catName
           FROM posts p
-          JOIN categories c ON p.category_id = c.id
+          LEFT JOIN categories c ON p.category_id = c.id
           WHERE p.id = :id;';
   $rs = $conn->prepare($sql);
   $rs->bindValue(':id', $id, \PDO::PARAM_INT);
