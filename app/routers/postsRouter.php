@@ -36,7 +36,7 @@ switch ($_GET['posts']):
 
 
   case 'store':
-    // INSERT A POST ROUTE
+    // STORE A POST ROUTE
     // PATTERN: /posts/add/insert.html => ?posts=store
     // CTRL: PostsController
     // ACTION: store
@@ -44,7 +44,7 @@ switch ($_GET['posts']):
     Core\Functions\storeFile($_FILES, $_POST);
     // TODO: error message & block process if file is not stored
     
-    PostsController\storeAction($conn, $_POST, $_FILES["image"]["name"]);
+    PostsController\storeAction($conn, $_POST, $_FILES['image']['name']);
     break;
 
   case 'update':
@@ -53,10 +53,18 @@ switch ($_GET['posts']):
     // CTRL: PostsController
     // ACTION: update
     // REDIRECTION to detail of post
-    Core\Functions\storeFile($_FILES, $_POST);
-    // TODO: error message & block process if file is not stored
 
-    PostsController\updateAction($conn, intval($_GET['id']), $_POST, $_FILES["image"]["name"]);
+    // check if picture wasn't changed
+    if(isset($_POST['image']) && $_FILES['image']['name'] === ''):
+      PostsController\updateAction($conn, intval($_GET['id']), $_POST, $_POST['image']);
+
+    else:
+      Core\Functions\storeFile($_FILES, $_POST);
+      // TODO: error message & block process if file is not stored
+
+      PostsController\updateAction($conn, intval($_GET['id']), $_POST, $_FILES['image']['name']);
+    endif;
+
     break;
 
   case 'delete':
