@@ -10,10 +10,13 @@
 // TODO: 
 //  value attribute doesn't display dynamical content with "double quote"
 //  prevent selection of wrong file [or display error message at submission?]
+//  possibility to delete linked picture
 
-$postTitle = !($post === []) ? $post['title'] : '';
-$postText = !($post === []) ? $post['text'] : '';
-$postQuote = !($post === []) ? $post['quote'] : '';
+$formAction = ($post === []) ? 'add/insert' : $post['id'] . '/' . Core\Functions\slugify($post['title']) . '/edit/update';
+
+$postTitle = ($post === []) ? '' : $post['title'];
+$postText = ($post === []) ? '' : $post['text'];
+$postQuote = ($post === []) ? '' : $post['quote'];
 
 ?>
 
@@ -36,25 +39,11 @@ $postQuote = !($post === []) ? $post['quote'] : '';
     <!-- Post Headline End -->
 
     <!-- Form Start -->
-    <?php 
-      if($post === []): ?>
-        <form 
-          action="posts/add/insert.html" 
-          method="post" 
-          enctype="multipart/form-data"
-        >
-
-        <?php
-      else: ?>
-        <form 
-          action="posts/<?php echo $post['id']; ?>/<?php echo Core\Functions\slugify($post['title']); ?>/edit/update.html" 
-          method="post" 
-          enctype="multipart/form-data"
-        >
-
-        <?php
-      endif;
-    ?>
+    <form 
+      action="posts/<?php echo $formAction; ?>.html"
+      method="post" 
+      enctype="multipart/form-data"
+    >
 
       <div class="form-group">
         <label for="title">Title</label>
@@ -68,6 +57,7 @@ $postQuote = !($post === []) ? $post['quote'] : '';
           value="<?php echo $postTitle; ?>"
         />
       </div>
+
       <div class="form-group">
         <label for="text">Text</label>
         <textarea
@@ -78,8 +68,36 @@ $postQuote = !($post === []) ? $post['quote'] : '';
           placeholder="Enter your text here"
         ><?php echo $postText; ?></textarea>
       </div>
+
+      <?php 
+        if(!($post === [] || $post['image'] === '')): ?>
+          <div class="form-group">
+            <label for="choosenImage">Image choisie</label>
+            <div><?php echo $post['image']; ?></div>
+            <input
+              type="hidden"
+              name="image"
+              id="choosenImage"
+              class="form-control"
+              placeholder="Enter your title here"
+              value="<?php echo $post['image']; ?>"
+            />
+            <div>
+              <img src="images/blog/<?php echo $post['image']; ?>" alt="" style="width:25%">
+            </div>
+          </div>
+          <?php
+        endif;
+      ?>
       <div class="form-group">
-        <label for="image">Image</label>
+      <label for="image">
+        Image 
+        <?php 
+          if(!($post === [] || $post['image'] === '')): 
+            echo ' (choisir une autre)'; 
+          endif; 
+        ?>
+      </label>
         <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
         <input 
           type="file" 
@@ -89,6 +107,7 @@ $postQuote = !($post === []) ? $post['quote'] : '';
           accept="image/png, image/jpeg, image/gif"
         />
       </div>
+
       <div class="form-group">
         <label for="quote">Quote</label>
         <textarea
@@ -99,6 +118,7 @@ $postQuote = !($post === []) ? $post['quote'] : '';
           placeholder="Enter your quote here"
         ><?php echo $postQuote; ?></textarea>
       </div>
+
       <div class="form-group">
         <label for="category">Category</label>
         <select
@@ -106,7 +126,7 @@ $postQuote = !($post === []) ? $post['quote'] : '';
           name="category_id"
           class="form-control"
         >
-        <?php 
+        <?php
           // asking all categories to categoriesModel
           include_once '../app/models/categoriesModel.php';
           $categories = App\Models\CategoriesModel\findAll($conn);
@@ -114,48 +134,34 @@ $postQuote = !($post === []) ? $post['quote'] : '';
           // Available VARIABLES: 
           // - $categories: ARRAY(ARRAY(id, name, created_at, postsCount))
 
-          if (!($post === [])): ?>
-            <option disabled>
-              Select your category
-            </option>
+          ?>
+          <option disabled <?php if($post === [] || $post['category_id'] === NULL): echo ' selected'; endif; ?>>
+            Select your category
+          </option>
 
-            <?php             
+          <?php             
             foreach($categories as $cat): 
 
-              if($post['category_id'] === $cat['id']): ?>
-
+              if($post['catName'] === $cat['name']): ?>
+    
                 <option value="<?php echo $cat['id']; ?>" selected>
                   <?php echo $cat['name']; ?>
                 </option>
                 
                 <?php
               else: ?>
+                
                 <option value="<?php echo $cat['id']; ?>">
                   <?php echo $cat['name']; ?>
                 </option>
                 
                 <?php
-              endif; 
-            
-            endforeach;
-
-          else: ?>
-            <option disabled selected>
-              Select your category
-            </option>
-
-            <?php          
-            foreach($categories as $cat): ?>
-
-              <option value="<?php echo $cat['id']; ?>">
-                <?php echo $cat['name']; ?>
-              </option>
-
-            <?php endforeach; 
-          endif; 
-        ?>
+              endif;
+            endforeach; 
+          ?>
         </select>
       </div>
+
       <div>
         <input
           class="btn btn-primary"
@@ -168,6 +174,7 @@ $postQuote = !($post === []) ? $post['quote'] : '';
           value="reset"
         />
       </div>
+      
     </form>
     <!-- Form End -->
   </div>
