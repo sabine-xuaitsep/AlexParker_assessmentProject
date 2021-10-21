@@ -75,55 +75,69 @@ function slugify(string $chain, string $separator = '-') :string {
  * @param array $post
  * @return void
  */
-function storeFile(array $files, array $post) {
+function storeFile(array $file) :array {
+  
+  // check if file exceed MAX_FILE_SIZE defined in form
+  //  2 === UPLOAD_ERR_FORM_SIZE
+  if($file['image']['error'] === 2): 
+    return [
+      'status'  => 0, 
+      'msg'     => "Your file is too large! Please choose another one."
+    ];
 
-  // TODO: improve all error messages
-  
-  $img_dir = "D:/web_dev/Dropbox/htdocs/scripts_serveurs/AlexParker_assessmentProject/public/images/blog/";
-  $target_file = $img_dir . basename($files["image"]["name"]);    
-  $uploadOk = 1;
-  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-  
-  // Check if image file is a actual image or fake image
-  if(isset($post["submit"])) {
-    $check = getimagesize($files["image"]["tmp_name"]);
-    if($check !== false) {
-      echo "File is an image - " . $check["mime"] . ".";
-      $uploadOk = 1;
-    } else {
-      echo "File is not an image.";
-      $uploadOk = 0;
-    }
-  }
-  
-  // Check if file already exists
-  if (file_exists($target_file)) {
-    echo "Sorry, file already exists.";
-    $uploadOk = 0;
-  }
-  
-  // Check file size
-  if ($files["image"]["size"] > 3000000) {
-    echo "Sorry, your file is too large.";
-    $uploadOk = 0;
-  }
-  
-  // Allow certain file formats
-  if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-  && $imageFileType != "gif" ) {
-    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-    $uploadOk = 0;
-  }
+  // check if no error
+  //  0 === UPLOAD_ERR_OK
+  elseif($file['image']['error'] === 0): 
 
-  // Check if $uploadOk is set to 0 by an error
-  if ($uploadOk == 0) {
-    echo "Sorry, your file was not uploaded.";
-  // if everything is ok, try to upload file
-  } else {
-    if (move_uploaded_file($files["image"]["tmp_name"], $target_file)) {
-      echo "The file ". htmlspecialchars(basename($files["image"]["name"])). " has been uploaded.";
-    } else {
-      echo "Sorry, there was an error uploading your file.";
-    }
-  }
+    $img_dir = "D:/web_dev/Dropbox/htdocs/scripts_serveurs/AlexParker_assessmentProject/public/images/blog/";
+    $target_file = $img_dir . basename($file['image']['name']); 
+  
+    $checkMime = preg_split("/\//", mime_content_type($file['image']['tmp_name']));
+
+    // check if file is fake image
+    if($checkMime[0] !== "image"):
+      return [
+        'status'  => 0, 
+        'msg'     => "File is not really a picture. Choose a picture."
+      ];
+    endif;
+
+    // allow certain file formats
+    $allowedExt = ["jpeg", "png", "gif"];
+    $allowed = array_search($checkMime[1], $allowedExt);
+    if($allowed === false):
+      return [
+        'status'  => 0, 
+        'msg'     => "File is an " . mime_content_type($file['image']['tmp_name']) . ". Only .jpg, .jpeg, .png or .gif files are allowed. Please choose another one."
+      ];
+    endif;
+
+    // check if file already exists
+    if(file_exists($target_file)):
+      return [
+        'status'  => 0, 
+        'msg'     => "File already exists. Please rename it or choose another one."
+      ];
+    endif;
+
+    // if everything is ok, try to upload file
+    if(move_uploaded_file($file['image']['tmp_name'], $target_file)): 
+      return [
+        'status'  => 1, 
+        'msg'     => "The file ". htmlspecialchars(basename($file["image"]["name"])). " has been uploaded."
+      ];
+    else:
+      return [
+        'status'  => 0, 
+        'msg'     => "Sorry, there was an error uploading your file. Please choose another one or try again later."
+      ];
+    endif;
+
+  else:
+    return [
+      'status'  => 0, 
+      'msg'     => "Sorry, an error occurred. You will be redirected to the previous page. If error persist, try again later."
+    ];
+
+  endif;
 }

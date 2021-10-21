@@ -9,7 +9,7 @@
 
 // TODO: 
 //  value attribute doesn't display dynamical content with "double quote"
-//  prevent selection of wrong file [or display error message at submission?]
+//  possibility to choose an already chosen picture
 //  possibility to delete linked picture
 
 $formAction = ($post === []) ? 'add/insert' : $post['id'] . '/' . Core\Functions\slugify($post['title']) . '/edit/update';
@@ -105,7 +105,9 @@ $postQuote = ($post === []) ? '' : $post['quote'];
           id="image" 
           name="image" 
           accept="image/png, image/jpeg, image/gif"
+          aria-describedby="fileHelp"
         />
+        <small id="fileHelp">Only .jpg, .jpeg, .png or .gif file, and max. 3 Mo</small>
       </div>
 
       <div class="form-group">
