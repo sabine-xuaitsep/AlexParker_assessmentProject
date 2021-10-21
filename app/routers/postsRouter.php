@@ -3,7 +3,7 @@
   ./app/routers/postsRouter.php
 
   intval() prevent error: 
-    number > 9223372036854775807 === string
+    (number > 9223372036854775807) === string
 */
 
 use App\Controllers\PostsController;
@@ -47,6 +47,7 @@ switch ($_GET['posts']):
     PostsController\storeAction($conn, $_POST, $_FILES['image']['name']);
     break;
 
+
   case 'update':
     // UPDATE A POST ROUTE
     // PATTERN: /posts/id/slug-of-post/edit/update.html => ?posts=update&id=x
@@ -67,6 +68,7 @@ switch ($_GET['posts']):
 
     break;
 
+
   case 'delete':
     // DELETE A POST ROUTE
     // PATTERN: /posts/id/slug-of-post/delete.html => ?posts=delete&id=x
@@ -76,6 +78,7 @@ switch ($_GET['posts']):
     PostsController\deleteAction($conn, intval($_GET['id']));
     break;
   
+
   case 'more':
     // POST PAGINATION ROUTE
     // PATTERN: /page/x.html => ?posts=more&page=x
@@ -85,6 +88,7 @@ switch ($_GET['posts']):
     PostsController\indexAction($conn, intval($_GET['page']));
     break;
 
+    
   default:
     // DETAIL OF A POST ROUTE
     // PATTERN: /posts/id/slug-of-post.html => ?posts=x

@@ -21,6 +21,6 @@ else:
   endif;
 
   include_once '../app/controllers/postsController.php';
-  App\Controllers\PostsController\indexAction($conn, 1);
+  App\Controllers\PostsController\indexAction($conn);
   
 endif;

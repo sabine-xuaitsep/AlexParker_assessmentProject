@@ -7,6 +7,7 @@ namespace App\Controllers\PostsController;
 use App\Models\PostsModel;
 include_once '../app/models/postsModel.php';
 
+
 /**
  * indexAction: posts list
  *
@@ -14,7 +15,7 @@ include_once '../app/models/postsModel.php';
  * @param integer $pageNb
  * @return void
  */
-function indexAction(\PDO $conn, int $pageNb) {
+function indexAction(\PDO $conn, int $pageNb = 1) {
   // count all posts
   $postsCount = PostsModel\countAll($conn);
   $nbOfPages = ceil($postsCount/10);
@@ -52,6 +53,7 @@ function indexAction(\PDO $conn, int $pageNb) {
  */
 function showAction(\PDO $conn, int $id) {
   // asking one post to postsModel
+  //  ($id exist) ? return [data] : return [] 
   $post = PostsModel\findOne($conn, $id);
 
   //  if $id doesn't exist in DB
@@ -105,13 +107,18 @@ function popupAction(\PDO $conn) {
  */
 function editAction(\PDO $conn, int $id = 0) {
   // asking one post to postsModel 
-  //  $_GET['id'] exist ? return [data] : return [] 
+  //  ($id exist) ? return [data] : return [] 
   $post = PostsModel\findOne($conn, $id);
+  
+  // check if $id doesn't exist && URL matches with Add a post route
+  if($post === [] && ($_SERVER['REQUEST_URI'] != BASE_HREF . 'posts/add/form.html')):
+    // redirection to Add a post route
+    header('Location:' . BASE_HREF . 'posts/add/form.html'); 
+  endif;
 
   GLOBAL $content, $title;
   // load $title
   $title = ($post === []) ? "Alex Parker - Add a post" : "Alex Parker - Edit a post";
-  
   // load postForm
   ob_start();
     include '../app/views/posts/postForm.php';
@@ -138,9 +145,9 @@ function storeAction(\PDO $conn, array $data, string $fileName) {
 
   // check error
   if ($result === false):
-    // TODO: load error message
-    
-    editAction($conn);
+    // redirection to previous page
+    GLOBAL $script;
+      $script .= '<script>alert("Error : post not saved! You will be redirected to the previous page.");window.history.back();</script>';
   else:
     // redirection to homepage
     header('Location:' . BASE_HREF);
@@ -154,6 +161,7 @@ function storeAction(\PDO $conn, array $data, string $fileName) {
  * @param \PDO $conn
  * @param integer $id
  * @param array $data
+ * @param string $fileName
  * @return void
  */
 function updateAction(\PDO $conn, int $id, array $data, string $fileName) {
@@ -162,15 +170,12 @@ function updateAction(\PDO $conn, int $id, array $data, string $fileName) {
 
   // check error
   if ($result === false):
-    // TODO: load error message
-
-    editAction($conn, $id);
+    // redirection to previous page
+    GLOBAL $script;
+      $script .= '<script>alert("Error during update! You will be redirected to the previous page.");window.history.back();</script>';
   else:
     // redirection to detail of post
-    // TODO: dynamically improve header location 
     header('Location:' . BASE_HREF . 'posts/' . $id . '/' . \Core\Functions\slugify($data['title']) . '.html');
-    // header('Location:' . BASE_HREF . 'index.php?posts=' . $id);
-    // showAction($conn, $id);
   endif;
 }
 
@@ -188,11 +193,9 @@ function deleteAction(\PDO $conn, int $id) {
 
   // check error
   if ($result === false):
-    // TODO: load error message
-
-    // redirection to detail of post
-    // TODO: dynamically improve header location 
-    header('Location:' . BASE_HREF . 'posts/' . $id . '/' . \Core\Functions\slugify($data['title']) . '.html');
+    // redirection to previous page
+    GLOBAL $script;
+    $script .= '<script>alert("Deletion not executed! You will be redirected to the previous page.");window.history.back();</script>';
   else:
     // redirection to homepage
     header('Location:' . BASE_HREF);
