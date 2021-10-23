@@ -41,21 +41,7 @@ switch ($_GET['posts']):
     // CTRL: PostsController
     // ACTION: store
     // REDIRECTION to homepage
-
-    // 4 === UPLOAD_ERR_NO_FILE
-    $fileName = ($_FILES['image']['error'] === 4) ? '' : $_FILES['image']['name'];
-
-    $check = Core\Functions\storeFile($_FILES);
-    // $check = ARRAY(status, msg)
-    
-    if($check['status'] === 0):
-      GLOBAL $script;
-      $script .= '<script>alert("' . $check['msg'] . '");window.history.back();</script>';;
-      
-    else:
-      PostsController\storeAction($conn, $_POST, $fileName);
-    endif;
-
+    PostsController\storeAction($conn, $_POST, $_FILES);
     break;
 
 
@@ -65,24 +51,7 @@ switch ($_GET['posts']):
     // CTRL: PostsController
     // ACTION: update
     // REDIRECTION to detail of post
- 
-    // if no file selected
-    if($_FILES['image']['error'] === 4): // UPLOAD_ERR_NO_FILE
-      $fileName = isset($_POST['image']) ? $_POST['image'] : '';
-      PostsController\updateAction($conn, intval($_GET['id']), $_POST, $fileName);
-
-    else:
-      $check = Core\Functions\storeFile($_FILES);
-      // $check = ARRAY(status, msg)
-      
-      if($check['status'] === 0):
-        GLOBAL $script;
-        $script .= '<script>alert("' . $check['msg'] . '");window.history.back();</script>';
-      else:
-        PostsController\updateAction($conn, intval($_GET['id']), $_POST, $_FILES['image']['name']);
-      endif;
-
-    endif;
+    PostsController\updateAction($conn, intval($_GET['id']), $_POST, $_FILES);
     break;
 
 
