@@ -8,14 +8,13 @@
 */
 
 // TODO: 
-//  possibility to choose an already chosen picture
 //  possibility to delete linked picture
 
 $formAction = ($post === []) ? 'add/insert' : $post['id'] . '/' . Core\Functions\slugify($post['title']) . '/edit/update';
 
 $postTitle = ($post === []) ? '' : htmlentities($post['title']);
-$postText = ($post === []) ? '' : htmlentities($post['text']);
-$postQuote = ($post === []) ? '' : htmlentities($post['quote']);
+$postText = ($post === []) ? '' : $post['text'];
+$postQuote = ($post === []) ? '' : $post['quote'];
 
 ?>
 

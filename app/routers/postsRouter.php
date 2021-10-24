@@ -55,6 +55,33 @@ switch ($_GET['posts']):
     break;
 
 
+  case 'keepImg':
+
+    if(isset($_GET['id'])):
+      // AJAX UPDATE A POST ROUTE 
+      //  & USE STORED FILE WITH SAME NAME
+      // PATTERN: ?posts=keepImg&id=x&file=x
+      // CTRL: PostsController
+      // ACTION: ajaxUpdateAction
+      // REDIRECTION to detail of post
+      $data = json_decode(array_keys($_POST)[0], true);    
+      PostsController\ajaxUpdateAction($conn, intval($_GET['id']), $data, $_GET['file']);
+
+    else:
+      // AJAX ADD A POST ROUTE
+      //  & USE STORED FILE WITH SAME NAME
+      // PATTERN: ?posts=keepImg&file=x
+      // CTRL: PostsController
+      // ACTION: ajaxStoreAction
+      // REDIRECTION to homepage
+      $data = json_decode(array_keys($_POST)[0], true);    
+      PostsController\ajaxStoreAction($conn, $data, $_GET['file']);
+
+    endif;
+
+    break;
+
+
   case 'delete':
     // DELETE A POST ROUTE
     // PATTERN: /posts/id/slug-of-post/delete.html => ?posts=delete&id=x

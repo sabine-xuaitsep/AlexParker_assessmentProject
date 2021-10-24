@@ -17,10 +17,12 @@ include_once '../app/models/postsModel.php';
  */
 function indexAction(\PDO $conn, int $pageNb = 1) {
 
-  // check if URL = BASE_HREF
-  if($_SERVER['REQUEST_URI'] != BASE_HREF):
-    // redirection to homepage
-    header('Location:' . BASE_HREF);
+  if ($pageNb === 1):
+    // check if URL = BASE_HREF
+    if($_SERVER['REQUEST_URI'] != BASE_HREF):
+      // redirection to homepage
+      header('Location:' . BASE_HREF);
+    endif;
   endif;
     
   // count all posts
@@ -63,6 +65,12 @@ function showAction(\PDO $conn, int $id) {
   // asking one post to postsModel
   //  ($id exist) ? return [data] : return [] 
   $post = PostsModel\findOne($conn, $id);
+
+  // check if URL = BASE_HREF
+  if($_SERVER['REQUEST_URI'] === BASE_HREF . '?posts=' . $id):
+    // redirection to homepage
+    header('Location:' . BASE_HREF . 'posts/' . $id . '/' . \Core\Functions\slugify($post['title']) . '.html');
+  endif;
 
   //  if $id doesn't exist in DB
   if($post === []):
@@ -163,6 +171,20 @@ function storeAction(\PDO $conn, array $data, array $file) {
     if($check['status'] === 0):
       GLOBAL $script;
       $script .= '<script>alert("' . $check['msg'] . '");window.history.back();</script>';
+
+    elseif($check['status'] === 2): 
+
+      GLOBAL $content, $script;
+      // load _ghostForm to store $_POST & $_FILES
+      ob_start();
+        include '../app/views/posts/_ghostForm.php';
+      $content = ob_get_clean();
+
+      // add script for AJAX request
+      $script .= '
+        <script src="js/posts/store.js"></script>
+      ';
+
     else:
       $fileName = $file['image']['name'];
     endif;
@@ -188,6 +210,19 @@ function storeAction(\PDO $conn, array $data, array $file) {
 
 
 /**
+ * ajaxStoreAction
+ *
+ * @param \PDO $conn
+ * @param array $data
+ * @param string $fileName
+ * @return void
+ */
+function ajaxStoreAction(\PDO $conn, array $data, string $fileName) {
+  $result = PostsModel\insertOne($conn, $data, $fileName);
+}
+
+
+/**
  * updateAction
  *
  * @param \PDO $conn
@@ -209,6 +244,20 @@ function updateAction(\PDO $conn, int $id, array $data, array $file) {
     if($check['status'] === 0):
       GLOBAL $script;
       $script .= '<script>alert("' . $check['msg'] . '");window.history.back();</script>';
+
+    elseif($check['status'] === 2): 
+
+      GLOBAL $content, $script;
+      // load _ghostForm to store $_POST & $_FILES
+      ob_start();
+        include '../app/views/posts/_ghostForm.php';
+      $content = ob_get_clean();
+
+      // add script for AJAX request
+      $script .= '
+        <script src="js/posts/update.js"></script>
+      ';
+
     else:
       $fileName = $file['image']['name'];
     endif;
@@ -230,6 +279,20 @@ function updateAction(\PDO $conn, int $id, array $data, array $file) {
       header('Location:' . BASE_HREF . 'posts/' . $id . '/' . \Core\Functions\slugify($data['title']) . '.html');
     endif;
   endif;
+}
+
+
+/**
+ * ajaxUpdateAction
+ *
+ * @param \PDO $conn
+ * @param integer $id
+ * @param array $data
+ * @param string $fileName
+ * @return void
+ */
+function ajaxUpdateAction(\PDO $conn, int $id, array $data, string $fileName) {
+  $result = PostsModel\updateOne($conn, $id, $data, $fileName);
 }
 
 

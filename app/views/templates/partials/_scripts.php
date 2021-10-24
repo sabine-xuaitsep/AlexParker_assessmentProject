@@ -11,8 +11,10 @@
 <!-- Main Javascript File  -->
 <script type="text/javascript" src="js/scripts.js"></script>
 
+<!-- Loading AXIOS -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<!-- !!! syntaxHighlighter scripts ON FORM & SINGLE PAGES ONLY start !!! -->
+
+<!-- syntaxHighlighter & AXIOS scripts -->
 <?php echo $script; ?>
-<!-- !!! syntaxHighlighter scripts ON FORM & SINGLE PAGES ONLY end !!! -->
   

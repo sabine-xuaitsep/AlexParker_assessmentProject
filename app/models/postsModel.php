@@ -10,6 +10,7 @@ namespace App\Models\PostsModel;
  * findAll posts
  *
  * @param \PDO $conn
+ * @param integer $offset
  * @return array
  */
 function findAll(\PDO $conn, int $offset) :array {
@@ -69,7 +70,8 @@ function suggestOne(\PDO $conn) :array {
  *
  * @param \PDO $conn
  * @param array $data
- * @return integer
+ * @param string $fileName
+ * @return boolean
  */
 function insertOne(\PDO $conn, array $data, string $fileName) :bool {
   $sql = 'INSERT INTO posts
@@ -95,6 +97,7 @@ function insertOne(\PDO $conn, array $data, string $fileName) :bool {
  * @param \PDO $conn
  * @param integer $id
  * @param array $data
+ * @param string $fileName
  * @return boolean
  */
 function updateOne(\PDO $conn, int $id, array $data, string $fileName) :bool {

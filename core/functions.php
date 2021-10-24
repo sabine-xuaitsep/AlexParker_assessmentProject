@@ -42,15 +42,14 @@ function datify(string $date, string $format = DATE_FORMAT) :string {
  * @param  string $charset
  * @return string
  */
-function accent2ascii(string $str, string $charset = 'utf-8'): string
-{
-    $str = htmlentities($str, ENT_NOQUOTES, $charset);
+function accent2ascii(string $str, string $charset = 'utf-8'): string {
+  $str = htmlentities($str, ENT_NOQUOTES, $charset);
 
-    $str = preg_replace('#&([A-za-z])(?:acute|cedil|caron|circ|grave|orn|ring|slash|th|tilde|uml);#', '\1', $str);
-    $str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str); // pour les ligatures e.g. '&oelig;'
-    $str = preg_replace('#&[^;]+;#', '', $str); // supprime les autres caractères
+  $str = preg_replace('#&([A-za-z])(?:acute|cedil|caron|circ|grave|orn|ring|slash|th|tilde|uml);#', '\1', $str);
+  $str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str); // pour les ligatures e.g. '&oelig;'
+  $str = preg_replace('#&[^;]+;#', '', $str); // supprime les autres caractères
 
-    return $str;
+  return $str;
 }
 
 
@@ -71,73 +70,81 @@ function slugify(string $chain, string $separator = '-') :string {
 /**
  * storeFile
  *
- * @param array $files
- * @param array $post
- * @return void
+ * @param array $file
+ * @return array
  */
 function storeFile(array $file) :array {
-  
+
+  // init $status for later check
+  $status = 1;
+  // init $msg for storing errors
+  $msg = 'Check: ';
+
+
   // check if file exceed MAX_FILE_SIZE defined in form
-  //  2 === UPLOAD_ERR_FORM_SIZE
-  if($file['image']['error'] === 2): 
-    return [
-      'status'  => 0, 
-      'msg'     => "Your file is too large! Please choose another one."
-    ];
+  if($file['image']['error'] === 2): // UPLOAD_ERR_FORM_SIZE
+    $status = 0;
+    $msg .= "Your file is too large! Please choose a smaller one";
 
-  // check if no error
-  //  0 === UPLOAD_ERR_OK
-  elseif($file['image']['error'] === 0): 
 
-    $img_dir = "D:/web_dev/Dropbox/htdocs/scripts_serveurs/AlexParker_assessmentProject/public/images/blog/";
-    $target_file = $img_dir . basename($file['image']['name']); 
-  
+  elseif($file['image']['error'] === 0): // UPLOAD_ERR_OK
+    // store mime type
     $checkMime = preg_split("/\//", mime_content_type($file['image']['tmp_name']));
-
-    // check if file is fake image
-    if($checkMime[0] !== "image"):
-      return [
-        'status'  => 0, 
-        'msg'     => "File is not really a picture. Choose a picture."
-      ];
-    endif;
-
-    // allow certain file formats
+    // store if format is allowed
     $allowedExt = ["jpeg", "png", "gif"];
     $allowed = array_search($checkMime[1], $allowedExt);
-    if($allowed === false):
-      return [
-        'status'  => 0, 
-        'msg'     => "File is an " . mime_content_type($file['image']['tmp_name']) . ". Only .jpg, .jpeg, .png or .gif files are allowed. Please choose another one."
-      ];
-    endif;
+    // store path
+    $img_dir = "D:/web_dev/Dropbox/htdocs/scripts_serveurs/AlexParker_assessmentProject/public/images/blog/";
+    $target_file = $img_dir . basename($file['image']['name']); 
 
-    // check if file already exists
+    // check if file name already exists
     if(file_exists($target_file)):
-      return [
-        'status'  => 0, 
-        'msg'     => "File already exists. Please rename it or choose another one."
-      ];
+      $status = 2;
+      // redirection to ajaxAction
+      $msg .= "File name already exist. ";
+    endif;
+    
+    // check if file is fake image
+    if($checkMime[0] !== "image"):
+      $status = 0;
+      $msg .= "File is not really a picture. ";
     endif;
 
-    // if everything is ok, try to upload file
-    if(move_uploaded_file($file['image']['tmp_name'], $target_file)): 
-      return [
-        'status'  => 1, 
-        'msg'     => "The file ". htmlspecialchars(basename($file["image"]["name"])). " has been uploaded."
-      ];
-    else:
-      return [
-        'status'  => 0, 
-        'msg'     => "Sorry, there was an error uploading your file. Please choose another one or try again later."
-      ];
+    // check if file format is allowed
+    if($allowed === false):
+      $status = 0;
+      $msg .= "Your file is " . mime_content_type($file['image']['tmp_name']) . " format. Only .jpg, .jpeg, .png or .gif files are allowed. ";
     endif;
+
+    // if everything OK
+    if($status === 1):
+      // try to upload file
+      if(move_uploaded_file($file['image']['tmp_name'], $target_file)): 
+        $status = 1;
+        $msg = "The file ". htmlspecialchars(basename($file["image"]["name"])). " has been uploaded. ";
+      else:
+        $status = 0;
+        $msg = "Sorry, there was an error uploading your file. Please choose another one or try again later. ";
+      endif;
+    
+    else:
+      $msg .= "Please choose another one.";
+
+    endif;
+
 
   else:
-    return [
-      'status'  => 0, 
-      'msg'     => "Sorry, an error occurred. You will be redirected to the previous page. If error persist, try again later."
-    ];
+    $status = 0;
+    $msg = "Sorry, an error occurred. You will be redirected to the previous page. If error persist, try again later.";
 
   endif;
+
+  
+  // render $check
+  $check = [
+    'status'  => $status, 
+    'msg'     => $msg
+  ];
+
+  return $check;
 }
