@@ -45,9 +45,8 @@
     </div>
 
     
-    <!-- !!! popup ON FORM & SINGLE PAGES ONLY start !!! -->
+    <!-- popup ON FORM & SINGLE PAGES ONLY -->
     <?php echo $popup; ?>
-    <!-- !!! popup ON FORM & SINGLE PAGES ONLY end !!! -->
 
     
     <!-- Back to Top Start -->

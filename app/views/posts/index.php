@@ -25,7 +25,9 @@ use Core\Functions;
 
     <!-- Blog Post Start -->
     <?php foreach($posts as $post): ?>
+
       <div class="col-md-12 blog-post">
+
         <div class="post-title">
           <a href="posts/<?php echo $post['id']; ?>/<?php echo Functions\slugify($post['title']); ?>.html">
             <h1>
@@ -33,6 +35,7 @@ use Core\Functions;
             </h1>
           </a>
         </div>
+
         <div class="post-info">
           <span>
             <?php echo Functions\datify($post['created_at']); ?>
@@ -40,9 +43,11 @@ use Core\Functions;
             <?php echo $post['catName']; ?>
           </span>
         </div>
+
         <p>
           <?php echo Functions\truncate($post['text']); ?>
         </p>
+
         <a
         href="posts/<?php echo $post['id']; ?>/<?php echo Functions\slugify($post['title']); ?>.html"
         class="
@@ -53,6 +58,7 @@ use Core\Functions;
           <span>Read More</span>
         </a>
       </div>
+      
     <?php endforeach; ?>
     <!-- Blog Post End -->
 
@@ -60,7 +66,13 @@ use Core\Functions;
       <ul class="pagination">
 
         <?php if($pageNb > 1): ?>
-          <li class="page-item"><a class="page-link" href="<?php if(isset($cat)): echo "categories/" . $cat['id'] . "/"; endif; ?>page/<?php echo $pageNb-1; ?>.html">Previous</a></li>
+
+          <li class="page-item">
+            <a class="page-link" href="<?php if(isset($cat)): echo "categories/" . $cat['id'] . "/"; endif; ?>page/<?php echo $pageNb-1; ?>.html">
+              Previous
+            </a>
+          </li>
+
         <?php endif; ?>
 
         <?php 
@@ -69,20 +81,35 @@ use Core\Functions;
 
             if($pageNb === $i):
               ?>
-              <li class="page-item active"><a class="page-link" href="<?php if(isset($cat)): echo "categories/" . $cat['id'] . "/"; endif; ?>page/<?php echo $i; ?>.html"><?php echo $i; ?></a></li>
+              <li class="page-item active">
+                <a class="page-link" href="<?php if(isset($cat)): echo "categories/" . $cat['id'] . "/"; endif; ?>page/<?php echo $i; ?>.html">
+                  <?php echo $i; ?>
+                </a>
+              </li>
+
               <?php
             else:
               ?>
-            <li class="page-item"><a class="page-link" href="<?php if(isset($cat)): echo "categories/" . $cat['id'] . "/"; endif; ?>page/<?php echo $i; ?>.html"><?php echo $i; ?></a></li>
+            <li class="page-item">
+              <a class="page-link" href="<?php if(isset($cat)): echo "categories/" . $cat['id'] . "/"; endif; ?>page/<?php echo $i; ?>.html">
+                <?php echo $i; ?>
+              </a>
+            </li>
+
             <?php
             endif;
-              ?>
-            <?php
+
           endfor;
         ?>
 
         <?php if($pageNb < $nbOfPages): ?>
-          <li class="page-item"><a class="page-link" href="<?php if(isset($cat)): echo "categories/" . $cat['id'] . "/"; endif; ?>page/<?php echo $pageNb+1; ?>.html">Next</a></li>
+
+          <li class="page-item">
+            <a class="page-link" href="<?php if(isset($cat)): echo "categories/" . $cat['id'] . "/"; endif; ?>page/<?php echo $pageNb+1; ?>.html">
+              Next
+            </a>
+          </li>
+
         <?php endif; ?>
         
       </ul>

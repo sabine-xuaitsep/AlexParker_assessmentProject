@@ -18,8 +18,8 @@ include_once '../app/models/postsModel.php';
 function indexAction(\PDO $conn, int $pageNb = 1) {
 
   if ($pageNb === 1):
-    // check if URL != BASE_HREF
-    if($_SERVER['REQUEST_URI'] != BASE_HREF):
+    // check if URL !== BASE_HREF
+    if($_SERVER['REQUEST_URI'] !== BASE_HREF):
       // redirection to homepage
       header('Location:' . BASE_HREF);
     endif;
@@ -73,7 +73,7 @@ function showAction(\PDO $conn, int $id) {
 
   else:
     // check URL
-    if($_SERVER['REQUEST_URI'] === BASE_HREF . '?posts=' . $id):
+    if($_SERVER['REQUEST_URI'] !== BASE_HREF . 'posts/' . $id . '/' . \Core\Functions\slugify($post['title']) . '.html'):
       // redirection to detail of a post
       header('Location:' . BASE_HREF . 'posts/' . $id . '/' . \Core\Functions\slugify($post['title']) . '.html');
     endif;
@@ -132,6 +132,12 @@ function editAction(\PDO $conn, int $id = 0) {
   if($post === [] && ($_SERVER['REQUEST_URI'] != BASE_HREF . 'posts/add/form.html')):
     // redirection to Add a post route
     header('Location:' . BASE_HREF . 'posts/add/form.html'); 
+  endif;
+
+  // check if $id exist && URL matches with Edit a post route
+  if($post !== [] && $_SERVER['REQUEST_URI'] !== BASE_HREF . 'posts/' . $id . '/' . \Core\Functions\slugify($post['title']) . '/edit/form.html'):
+    // redirection to detail of a post
+    header('Location:' . BASE_HREF . 'posts/' . $id . '/' . \Core\Functions\slugify($post['title']) . '/edit/form.html');
   endif;
 
   GLOBAL $content, $title;

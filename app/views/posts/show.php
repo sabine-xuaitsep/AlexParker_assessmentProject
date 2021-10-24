@@ -1,6 +1,6 @@
 <?php
 /*
-  ./app/views/posts/index.php
+  ./app/views/posts/show.php
 
   Available VARIABLES: 
     - $post: ARRAY(id, title, text, created_at, quote, image, category_id, catName)

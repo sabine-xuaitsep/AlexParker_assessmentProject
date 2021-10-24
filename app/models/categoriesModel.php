@@ -24,7 +24,7 @@ function findAll(\PDO $conn) :array {
 
 
 /**
- * findOne name by id
+ * findOne by id
  *
  * @param \PDO $conn
  * @param string $id

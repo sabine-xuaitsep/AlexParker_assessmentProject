@@ -12,9 +12,15 @@ $categories = App\Models\CategoriesModel\findAll($conn);
 ?>
 
 <ul class="menu-link">
+
   <?php foreach($categories as $cat): ?>
-    <li><a href="categories/<?php echo $cat['id']; ?>/<?php echo Core\Functions\slugify($cat['name']); ?>.html">
-      <?php echo $cat['name'] . ' [' . $cat['postsCount'] . ']'; ?>
-    </a></li>
+
+    <li>
+      <a href="categories/<?php echo $cat['id']; ?>/<?php echo Core\Functions\slugify($cat['name']); ?>.html">
+        <?php echo $cat['name'] . ' [' . $cat['postsCount'] . ']'; ?>
+      </a>
+    </li>
+
   <?php endforeach; ?>
+
 </ul>

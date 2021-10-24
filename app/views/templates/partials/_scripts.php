@@ -15,6 +15,6 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
-<!-- syntaxHighlighter & AXIOS scripts -->
+<!-- syntaxHighlighter, AXIOS & other scripts -->
 <?php echo $script; ?>
   

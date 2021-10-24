@@ -1,6 +1,9 @@
 <?php
 /*
   ./app/router.php
+
+  intval() prevent error: 
+  (number > 9223372036854775807) === string
 */
 
 
