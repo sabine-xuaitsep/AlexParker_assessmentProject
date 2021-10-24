@@ -6,6 +6,7 @@
     - $posts: ARRAY(ARRAY(id, title, text, created_at, quote, image, category_id, catName))
     - $nbOfPages: INT
     - $pageNb: INT
+    - $cat if in categoryAction
 */
 
 use Core\Functions;
@@ -59,7 +60,7 @@ use Core\Functions;
       <ul class="pagination">
 
         <?php if($pageNb > 1): ?>
-          <li class="page-item"><a class="page-link" href="page/<?php echo $pageNb-1; ?>.html">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="<?php if(isset($cat)): echo "categories/" . $cat['id'] . "/"; endif; ?>page/<?php echo $pageNb-1; ?>.html">Previous</a></li>
         <?php endif; ?>
 
         <?php 
@@ -68,11 +69,11 @@ use Core\Functions;
 
             if($pageNb === $i):
               ?>
-              <li class="page-item active"><a class="page-link" href="page/<?php echo $i; ?>.html"><?php echo $i; ?></a></li>
+              <li class="page-item active"><a class="page-link" href="<?php if(isset($cat)): echo "categories/" . $cat['id'] . "/"; endif; ?>page/<?php echo $i; ?>.html"><?php echo $i; ?></a></li>
               <?php
             else:
               ?>
-            <li class="page-item"><a class="page-link" href="page/<?php echo $i; ?>.html"><?php echo $i; ?></a></li>
+            <li class="page-item"><a class="page-link" href="<?php if(isset($cat)): echo "categories/" . $cat['id'] . "/"; endif; ?>page/<?php echo $i; ?>.html"><?php echo $i; ?></a></li>
             <?php
             endif;
               ?>
@@ -81,7 +82,7 @@ use Core\Functions;
         ?>
 
         <?php if($pageNb < $nbOfPages): ?>
-          <li class="page-item"><a class="page-link" href="page/<?php echo $pageNb+1; ?>.html">Next</a></li>
+          <li class="page-item"><a class="page-link" href="<?php if(isset($cat)): echo "categories/" . $cat['id'] . "/"; endif; ?>page/<?php echo $pageNb+1; ?>.html">Next</a></li>
         <?php endif; ?>
         
       </ul>

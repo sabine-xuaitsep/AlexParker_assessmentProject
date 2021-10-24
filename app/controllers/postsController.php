@@ -18,7 +18,7 @@ include_once '../app/models/postsModel.php';
 function indexAction(\PDO $conn, int $pageNb = 1) {
 
   if ($pageNb === 1):
-    // check if URL = BASE_HREF
+    // check if URL != BASE_HREF
     if($_SERVER['REQUEST_URI'] != BASE_HREF):
       // redirection to homepage
       header('Location:' . BASE_HREF);
@@ -66,18 +66,18 @@ function showAction(\PDO $conn, int $id) {
   //  ($id exist) ? return [data] : return [] 
   $post = PostsModel\findOne($conn, $id);
 
-  // check if URL = BASE_HREF
-  if($_SERVER['REQUEST_URI'] === BASE_HREF . '?posts=' . $id):
-    // redirection to homepage
-    header('Location:' . BASE_HREF . 'posts/' . $id . '/' . \Core\Functions\slugify($post['title']) . '.html');
-  endif;
-
   //  if $id doesn't exist in DB
   if($post === []):
     // redirection to homepage
     header('Location:' . BASE_HREF);
 
   else:
+    // check URL
+    if($_SERVER['REQUEST_URI'] === BASE_HREF . '?posts=' . $id):
+      // redirection to detail of a post
+      header('Location:' . BASE_HREF . 'posts/' . $id . '/' . \Core\Functions\slugify($post['title']) . '.html');
+    endif;
+
     GLOBAL $content, $title;
     // load $title
     $title = "Alex Parker - " . $post['title'];
@@ -338,4 +338,45 @@ function deleteAction(\PDO $conn, int $id) {
 function ajaxDeleteAction(\PDO $conn, int $id) {
   // deleting post by $id in postsTable
   $result = PostsModel\deleteOne($conn, $id);
+}
+
+
+/**
+ * categoryAction: all posts by catID
+ *
+ * @param \PDO $conn
+ * @param integer $id
+ * @return void
+ */
+function categoryAction(\PDO $conn, int $id, int $pageNb = 1) {
+    
+  // count all posts by catID
+  $postsCount = PostsModel\countAllByCatID($conn, $id);
+  $nbOfPages = ceil($postsCount/10);
+
+  //  if pageNb doesn't exist
+  //    lower numbers are already excluded by .htaccess
+  if($pageNb > $nbOfPages):
+    // redirection to homepage
+    header('Location:' . BASE_HREF);
+
+  else:
+    // calc $offset
+    $offset = ($pageNb-1)*10;
+
+    // asking one category to categoriesModel
+    include_once '../app/models/categoriesModel.php';
+    $cat = \App\Models\CategoriesModel\findOne($conn, $id);
+      
+    // asking all posts by catID to categoriesModel
+    $posts = PostsModel\findAllByCatID($conn, $id, $offset);
+
+    // load $title & posts/index in $content
+    GLOBAL $content, $title;
+    $title = "Alex Parker - " . $cat['name'];
+    ob_start();
+      include '../app/views/posts/index.php';
+    $content = ob_get_clean();
+
+  endif;
 }

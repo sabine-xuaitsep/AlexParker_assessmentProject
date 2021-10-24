@@ -43,9 +43,19 @@ RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\/edit\/update\.html$ inde
 RewriteRule ^posts\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\/delete\.html$ index.php?posts=delete&id=$1 [L]
 
 # POST PAGINATION ROUTE
-# PATTERN: /page/x.html
+# PATTERN: page/x.html
 # URL: index.php?posts=more&page=x
-RewriteRule ^page\/([1-9][0-9]*).html$ index.php?posts=more&page=$1 [L]
+RewriteRule ^page\/([1-9][0-9]*)\.html$ index.php?posts=more&page=$1 [L]
+
+# CATEGORIES ROUTE
+# PATTERN: categories/id/slug-of-category.html
+# URL: index.php?catID=x
+RewriteRule ^categories\/([1-9][0-9]*)\/[a-z0-9][a-z0-9\-]*\.html$ index.php?catID=$1 [L]
+
+# CATEGORIES PAGINATION ROUTE
+# PATTERN: categories/id/page/x.html
+# URL: index.php?catID=x&page=x
+RewriteRule ^categories\/([1-9][0-9]*)\/page\/([1-9][0-9]*)\.html$ index.php?catID=$1&page=$2 [L]
 
 #-----------------------------------------------
 RewriteCond %{REQUEST_URI} !\.(js|css|ico|png|jpg|jpeg|gif|zip|pdf|svg|eot|ttf|woff|woff2)$ [NC]
