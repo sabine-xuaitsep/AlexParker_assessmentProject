@@ -218,6 +218,11 @@ function storeAction(\PDO $conn, array $data, array $file) {
  * @return void
  */
 function ajaxStoreAction(\PDO $conn, array $data, string $fileName) {
+  $data = [
+    'title' => str_replace('_', ' ', $data['title']),
+    'text'  => str_replace('_', ' ', $data['text']),
+    'quote' => str_replace('_', ' ', $data['quote'])
+  ];
   $result = PostsModel\insertOne($conn, $data, $fileName);
 }
 
@@ -292,6 +297,11 @@ function updateAction(\PDO $conn, int $id, array $data, array $file) {
  * @return void
  */
 function ajaxUpdateAction(\PDO $conn, int $id, array $data, string $fileName) {
+  $data = [
+    'title' => str_replace('_', ' ', $data['title']),
+    'text'  => str_replace('_', ' ', $data['text']),
+    'quote' => str_replace('_', ' ', $data['quote'])
+  ];
   $result = PostsModel\updateOne($conn, $id, $data, $fileName);
 }
 
@@ -304,17 +314,28 @@ function ajaxUpdateAction(\PDO $conn, int $id, array $data, string $fileName) {
  * @return void
  */
 function deleteAction(\PDO $conn, int $id) {
-  
-  // updating $data by $id in postsTable
-  $result = PostsModel\deleteOne($conn, $id);
 
-  // check error
-  if ($result === false):
-    // redirection to previous page
-    GLOBAL $script;
-    $script .= '<script>alert("Deletion not executed! You will be redirected to the previous page.");window.history.back();</script>';
-  else:
-    // redirection to homepage
-    header('Location:' . BASE_HREF);
-  endif;
+  GLOBAL $content, $script;
+  // load _ghostForm to store $id
+  ob_start();
+    include '../app/views/posts/_ghostForm.php';
+  $content = ob_get_clean();
+
+  // add script for AJAX request
+  $script .= '
+    <script src="js/posts/delete.js"></script>
+  ';
+}
+
+
+/**
+ * ajaxDeleteAction
+ *
+ * @param \PDO $conn
+ * @param integer $id
+ * @return void
+ */
+function ajaxDeleteAction(\PDO $conn, int $id) {
+  // deleting post by $id in postsTable
+  $result = PostsModel\deleteOne($conn, $id);
 }

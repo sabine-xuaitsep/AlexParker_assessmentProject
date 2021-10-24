@@ -64,6 +64,7 @@ $postQuote = ($post === []) ? '' : $post['quote'];
           class="form-control"
           rows="5"
           placeholder="Enter your text here"
+          required="required"
         ><?php echo $postText; ?></textarea>
       </div>
 

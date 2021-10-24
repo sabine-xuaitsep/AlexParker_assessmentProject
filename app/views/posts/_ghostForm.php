@@ -27,19 +27,17 @@
 
 <input
   type="hidden"
+  name="text"
+  id="postText"
+  value="<?php echo htmlentities($_POST['text']); ?>"
+/>
+
+<input
+  type="hidden"
   name="image"
   id="fileName"
   value="<?php echo htmlentities($_FILES['image']['name']); ?>"
 />
-
-<?php if(isset($_POST['text'])): ?>
-  <input
-    type="hidden"
-    name="text"
-    id="postText"
-    value="<?php echo htmlentities($_POST['text']); ?>"
-  />
-<?php endif; ?>
 
 <?php if(isset($_POST['quote'])): ?>
   <input

@@ -1,5 +1,5 @@
 /* 
-  ./public/js/posts/update.js
+  ./public/js/posts/store.js
     AJAX request
 */
 

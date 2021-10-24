@@ -64,7 +64,7 @@ switch ($_GET['posts']):
       // CTRL: PostsController
       // ACTION: ajaxUpdateAction
       // REDIRECTION to detail of post
-      $data = json_decode(array_keys($_POST)[0], true);    
+      $data = json_decode(array_keys($_POST)[0], true); 
       PostsController\ajaxUpdateAction($conn, intval($_GET['id']), $data, $_GET['file']);
 
     else:
@@ -83,12 +83,24 @@ switch ($_GET['posts']):
 
 
   case 'delete':
-    // DELETE A POST ROUTE
-    // PATTERN: /posts/id/slug-of-post/delete.html => ?posts=delete&id=x
-    // CTRL: PostsController
-    // ACTION: delete
-    // REDIRECTION to homepage
-    PostsController\deleteAction($conn, intval($_GET['id']));
+
+    if(isset($_GET['confirmed'])):
+      // AJAX DELETE A POST ROUTE
+      // PATTERN: ?posts=delete&id=x&confirmed=ok
+      // CTRL: PostsController
+      // ACTION: delete
+      // REDIRECTION to homepage
+      PostsController\ajaxDeleteAction($conn, $_GET['id']);
+
+    else:
+      // DELETE A POST ROUTE
+      // PATTERN: /posts/id/slug-of-post/delete.html => ?posts=delete&id=x
+      // CTRL: PostsController
+      // ACTION: delete
+      // REDIRECTION to homepage
+      PostsController\deleteAction($conn, intval($_GET['id']));
+    endif;
+
     break;
   
 
